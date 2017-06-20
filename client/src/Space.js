@@ -34,9 +34,11 @@ class Space {
   }
 
   renderSpace() {
+    this.stage.removeAllChildren()
     for (let i = 0; i < this.nodeList.length; i++) {
       this.nodeList[i].render(this.nodeDim())
       this.stage.addChild(this.nodeList[i].container)
+      if (this.nextNode !== 0) {this.stage.addChild(this.nodeList[i].line)}
       this.nextNode += 1
     }
     this.stage.update()
