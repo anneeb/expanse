@@ -13,7 +13,11 @@ module Api
       def create
         space = Space.new(params.require(:space).permit(:title,:creator))
         if space.save
-          render json: {message: "Created space!", status: 200}
+          render json: {
+            message: "Successfully created space!",
+            status: 200,
+            data: Space.last
+          }
         else
           render json: {message: space.errors.full_messages, status: 500}
         end

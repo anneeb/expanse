@@ -10,14 +10,18 @@ module Api
         render json: Node.find(params[:id])
       end
 
-      # def create
-      #   node = Node.new(params.require(:node).permit(:title,:body,:parent_id,:space_id))
-      #   if node.save
-      #     render json: {message: "Created node!", status: 200}
-      #   else
-      #     render json: {message: node.errors.full_messages, status: 500}
-      #   end
-      # end
+      def create
+        node = Node.new(params.require(:node).permit(:title,:body,:parent_id,:space_id))
+        if node.save
+          render json: {
+            message: "Successfully created node!",
+            status: 200,
+            data: Node.last
+          }
+        else
+          render json: {message: node.errors.full_messages, status: 500}
+        end
+      end
 
     end
   end
