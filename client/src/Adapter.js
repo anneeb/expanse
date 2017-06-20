@@ -18,7 +18,7 @@ class Adapter {
   }
 
   createSpace(obj) {
-    var form = new FormData()
+    var form = new FormData
     form.append("space[title]", obj['title'])
     form.append("space[creator]", obj['creator'])
 
@@ -29,7 +29,7 @@ class Adapter {
   }
 
   createNode(obj) {
-    var form = new FormData()
+    var form = new FormData
     form.append("node[title]", obj['title'])
     form.append("node[body]", obj['body'])
     form.append("node[parent_id]", obj['parent_id'])
