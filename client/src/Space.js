@@ -6,10 +6,11 @@ class Space {
     this.boxChangeRight = 250
     this.lineChangeLeft = 75
     this.lineChangeRight = 275
+    this.stage = new createjs.Stage("space")
   }
 
-  addNode(name, body, parent) {
-    var newNode = new Node(name, body, parent)
+  addNode(title, body) {
+    var newNode = new Node(title, body)
     this.nodeList.push(newNode)
   }
 
@@ -35,8 +36,10 @@ class Space {
   renderSpace() {
     for (let i = 0; i < this.nodeList.length; i++) {
       this.nodeList[i].render(this.nodeDim())
+      this.stage.addChild(this.nodeList[i].container)
       this.nextNode += 1
     }
+    this.stage.update()
     this.nextNode = 0
     this.boxChangeLeft = 50
     this.boxChangeRight = 250
@@ -45,6 +48,6 @@ class Space {
   }
 
   render() {
-    return this.renderSpace()
+    this.renderSpace()
   }
 }
