@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Expanse</title>
     <script type="text/javascript" src='./lib/jquery-3.2.1.js'></script>
+    <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
   </head>
   <body>
     <h1>Create A Space</h1>
@@ -11,9 +12,8 @@
     <hr>
     <h2>Create A Node</h2>
     <form id="node-form">
-      <h3>Name: <input id="node-name" type='text' /></h3>
+      <h3>Title: <input id="node-title" type='text' /></h3>
       <h3>Body Text: <input id="node-body" type='text' /></h3>
-      <h3>Who Ur Daddy: <input id="node-parent" type='text' /></h3>
       <input id="add" type='submit' value="Create Node" />
     </form>
     <hr>
@@ -21,7 +21,6 @@
     <canvas id="space" width="1000" height="1000" style="border:2px solid black;">
       Your Dumbass Browser Needs An Update - Give It A Try (Or If You Are Using InternetExplorer - Just Throw Out Your Computer And Get A New One...)
     </canvas>
-    <div class="content-generator"></div>
 
     <script type="text/javascript" src='src/Space.js'></script>
     <script type="text/javascript" src='src/Node.js'></script>

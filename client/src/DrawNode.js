@@ -3,11 +3,13 @@ class DrawNode {
     this.node = node // .title + .body
     this.canvas = document.getElementById('space')// 300 x 300
     this.ctx = this.canvas.getContext('2d')
-    this.contentGenerator = $('#content-generator')
+
   }
 
-  formateNode() {
-
+  poop(array) {
+    // array format: [[x, y, w, h], [startX, startY, endX, endY]]
+    this.stage.addChild(this.node.box);
+    this.stage.update()
   }
 
   renderNode(array) {
@@ -23,6 +25,7 @@ class DrawNode {
   }
 
   render(array) {
-    this.renderNode(array)
+    // this.renderNode(array)
+    this.poop(array)
   }
 }
