@@ -1,9 +1,11 @@
 class Space {
   constructor() {
     this.nodeList = []
-    this.nextNode
-    this.changeLeft = 50
-    this.changeRight = 250
+    this.nextNode = 0
+    this.boxChangeLeft = 50
+    this.boxChangeRight = 250
+    this.lineChangeLeft = 75
+    this.lineChangeRight = 275
   }
 
   addNode(name, body, parent) {
@@ -13,32 +15,36 @@ class Space {
 
 
   nodeDim() {
+    console.log(this.nextNode);
     if (this.nextNode === 0) {
-      return [150, 0, 50, 50]
+      // this.nextNode += 1
+      return [[150, 0, 50, 50], [0]]
     } else if (this.nextNode === 1) {
-      return [150, 100, 50, 50]
+      // this.nextNode += 1
+      return [[150, 100, 50, 50], [175, 50, 175, 100]]
     } else {
       if (this.nextNode % 2 === 0) {
-        let x = [this.changeLeft, 100, 50, 50]
-        this.changeLeft -= 100
+        // this.nextNode += 1
+        let x = [[this.boxChangeLeft, 100, 50, 50], [175, 50, this.lineChangeLeft, 100]]
+        this.boxChangeLeft -= 100
+        this.lineChangeLeft -= 100
         return x
       } else {
-        let x = [this.changeRight, 100, 50, 50]
-        this.changeRight += 100
+        // this.nextNode += 1
+        let x = [[this.boxChangeRight, 100, 50, 50], [175, 50, this.lineChangeRight, 100]]
+        this.boxChangeRight += 100
+        this.lineChangeRight += 100
         return x
       }
     }
   }
 
   renderSpace() {
-    this.nextNode = 0
-    let renderMe = '<ul>'
     for (let i = 0; i < this.nodeList.length; i++) {
-      renderMe += this.nodeList[i].render()
-      this.nodeList[i].aRender(this.nodeDim())
+      this.nodeList[i].render(this.nodeDim())
       this.nextNode += 1
     }
-    return renderMe + '</ul>'
+    this.nextNode = 0 
   }
 
   render() {

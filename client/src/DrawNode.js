@@ -11,14 +11,19 @@ class DrawNode {
   }
 
   renderNode(array) {
-    // array format: [x, y, w, h]
-    this.ctx.strokeRect(array[0], array[1], array[2], array[3])
-  }
+    // array format: [[x, y, w, h], [startX, startY, endX, endY]]
+    
+    //title, body, parent
 
+    this.ctx.strokeRect(array[0][0], array[0][1], array[0][2], array[0][3])
+    if (array[1][0] !== 0) {
+      this.ctx.moveTo(array[1][0], array[1][1])
+      this.ctx.lineTo(array[1][2], array[1][3])
+      this.ctx.stroke()
+    }
+  }
 
   render(array) {
     this.renderNode(array)
   }
-
-
 }
