@@ -15,7 +15,6 @@ class Space {
 
 
   nodeDim() {
-    console.log(this.nextNode);
     if (this.nextNode === 0) {
         return [[150, 0, 50, 50], [0]]
     } else if (this.nextNode === 1) {
@@ -35,7 +34,6 @@ class Space {
 
   renderSpace() {
     for (let i = 0; i < this.nodeList.length; i++) {
-      console.log("hit");
       this.nodeList[i].render(this.nodeDim())
       this.nextNode += 1
     }
