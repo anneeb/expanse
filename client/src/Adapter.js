@@ -6,7 +6,7 @@ class Adapter {
   }
 
   getAllSpaces() {
-    return fetch(this.sources)
+    return fetch(this.spaces)
   }
 
   getSpaceById(id) {
@@ -22,7 +22,7 @@ class Adapter {
     form.append("space[title]", obj['title'])
     form.append("space[creator]", obj['creator'])
 
-    return fetch(this.sources, {
+    return fetch(this.spaces, {
       method: 'post',
       body: form
     })
@@ -39,6 +39,14 @@ class Adapter {
       method: 'post',
       body: form
     })
+  }
+
+  destroySpace(space_id) {
+    return fetch(this.spaces + space_id, {method: 'delete'})
+  }
+
+  destroyNode(node_id) {
+    return fetch(this.nodes + node_id, {method: 'delete'})
   }
 
 }
