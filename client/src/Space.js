@@ -23,27 +23,71 @@ class Space {
       .then(json => this.id = json.data.id)
   }
 
-  addNode(title, body, parentId) {
-    var newNode = new Node(this, title, body, this.id, parentId)
-    newNode.save()
+  fetchNodes() {
+    this.adapter.getSpaceById(this.id)
+      .then(resp => resp.json())
+      .then(json => {
+        this.nodeList = []
+        json.nodes.forEach(node => this.addNode(node))
+      })
+      .then(() => this.render())
   }
 
-  nodeDim(frank) {
-    if (this.nextNode === 0) {
-        return [[this.stage.canvas.width / 2, 5, 50, 50], [0]]
-    } else if (this.nextNode === 1) {
-        return [[this.stage.canvas.width / 2, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + 25, 100]]
-    } else if (this.nextNode % 2 === 0) {
-        let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
-        this.boxChangeLeft += 100
-        this.lineChangeLeft += 100
-        return x
-      } else if (this.nextNode % 2 !== 0) {
-        let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
-        this.boxChangeRight += 100
-        this.lineChangeRight += 100
-        return x
+  addNode(obj) {
+    var newNode = new Node(this, obj.id, obj.title, obj.body, obj.space_id, obj.parent_id, obj.num_child)
+    this.nodeList.push(newNode)
+  }
+
+  nodeDim(parentId) {
+    if (!parentId) {
+      return [[this.stage.canvas.width / 2, 5, 50, 50], [0]]
+    } else {
+      // console.log(this.nodeList)
+      let currentNodeParent = this.nodeList.find(node => node.id === parentId)
+      let parentX = currentNodeParent.container.x
+      let parentY = currentNodeParent.container.y
+
+      // array format: [[x, y, w, h], [startX, startY, endX, endY]]
+      if (this.nextNode === 1) {
+          return [[parentX, parentY + 100, 50, 50], [parentX + 25, parentY + 55, parentX + 25, parentY + 100]]
+
+      } else if (this.nextNode % 2 === 0) {
+          let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
+          this.boxChangeLeft += 100
+          this.lineChangeLeft += 100
+          return x
+
+        } else if (this.nextNode % 2 !== 0) {
+          let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
+          this.boxChangeRight += 100
+          this.lineChangeRight += 100
+          return x
+        }
       }
+
+
+
+
+
+
+
+
+
+    // if (this.nextNode === 0) {
+    //     return [[this.stage.canvas.width / 2, 5, 50, 50], [0]]
+    // } else if (this.nextNode === 1) {
+    //     return [[this.stage.canvas.width / 2, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + 25, 100]]
+    // } else if (this.nextNode % 2 === 0) {
+    //     let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
+    //     this.boxChangeLeft += 100
+    //     this.lineChangeLeft += 100
+    //     return x
+    //   } else if (this.nextNode % 2 !== 0) {
+    //     let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
+    //     this.boxChangeRight += 100
+    //     this.lineChangeRight += 100
+    //     return x
+    //   }
   }
 
   setParent(event) {
@@ -57,7 +101,7 @@ class Space {
   renderSpace() {
     this.stage.removeAllChildren()
     for (let i = 0; i < this.nodeList.length; i++) {
-      this.nodeList[i].render(this.nodeDim())
+      this.nodeList[i].render(this.nodeDim(this.nodeList[i].parentId))
       this.stage.addChild(this.nodeList[i].container)
       if (this.nextNode !== 0) {this.stage.addChild(this.nodeList[i].line)}
       this.nextNode += 1

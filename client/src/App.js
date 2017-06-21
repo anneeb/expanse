@@ -10,22 +10,29 @@ class App {
     this.nodeBody = $('#node-body')
     this.nodeParent = $('#node-parent-id')
     this.submitButton = $('#add')
+    this.adapter = new Adapter
     this.submitButton.click(this.onSubmit.bind(this))
   }
 
   onSubmit() {
     event.preventDefault()
-    this.space.addNode(this.nodeTitle.val(), this.nodeBody.val(),
-    this.nodeParent.val())
+    this.adapter.createNode({
+      title: this.nodeTitle.val(),
+      body: this.nodeBody.val(),
+      parent_id: this.nodeParent.val(),
+      space_id: this.space.id
+    })
+      .then(resp => resp.json())
+      .then(() => this.space.fetchNodes())
+
     this.nodeTitle.val('')
     this.nodeBody.val('')
     this.nodeParent.val('')
-    // this.render()
   }
 
-  // render() {
-  //   this.space.render()
-  // }
+  render() {
+    this.space.render()
+  }
 }
 
 function setCanvas(){
