@@ -83,14 +83,18 @@ class Space {
   renderForm(parentId) {
     let title = prompt("Node Title: ")
     let body = prompt("Node Body: ")
-    this.adapter.createNode({
-      title: title,
-      body: body,
-      parent_id: parentId,
-      space_id: this.id
-    })
-      .then(resp => resp.json())
-      .then(() => this.fetchNodes())
+    if (title === null || title === "") {
+      alert("Title cannot be blank")
+    } else {
+      this.adapter.createNode({
+        title: title,
+        body: body,
+        parent_id: parentId,
+        space_id: this.id
+      })
+        .then(resp => resp.json())
+        .then(() => this.fetchNodes())
+    }
   }
 
   renderSpace() {

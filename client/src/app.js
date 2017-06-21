@@ -31,7 +31,10 @@ class App {
       `<canvas id="space" style="border:2px solid black;">
       Your Dumbass Browser Needs An Update - Give It A Try
       (Or If You Are Using InternetExplorer - Just Throw Out Your Computer And Get A New One...)
-      </canvas>`
+      </canvas>
+
+      <button onClick="window.location.reload()">go home</button>
+      `
     )
     this.setCanvas()
     this.space = new Space(json.id, json.title, json.creator)
