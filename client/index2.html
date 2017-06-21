@@ -16,22 +16,37 @@
     </div>
 
     <div class="container" id="main">
-      <div id="project-selector">
-        <div class="row" id="projects"></div>
 
-        <div class="row" id="new-space">
-          <h2>Create a new Space</h2>
+      <div class="row">
+        <div class="col s3 m3"></div>
+        <div class="col s6 m6">
+          <div class="card blue-grey">
+            <div class="card-content white-text">
+              <input class="card-title" type="text" name="title" value="" id="new-title" placeholder="Title">
+              <input type="text" name="creator" value="" id="new-creator" placeholder="Creator">
+              <a class="btn-floating halfway-fab waves-effect waves-light red" id="new-space"><i class="material-icons">add</i></a>
+            </div>
+          </div>
         </div>
       </div>
+
+      <div class="row" id="projects"></div>
+      
     </div>
 
 
     <!-- jquery and materialize -->
     <script type="text/javascript" src='./lib/jquery-3.2.1.js'></script>
     <script type="text/javascript" src='./lib/materialize.js'></script>
+
+    <!-- easel -->
+    <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+
     <!-- scripts -->
     <script type="text/javascript" src='src/project.js'></script>
     <script type="text/javascript" src='src/adapter.js'></script>
+    <script type="text/javascript" src='src/spaceCopy.js'></script>
+    <script type="text/javascript" src='src/node.js'></script>
     <script type="text/javascript" src='src/app2.js'></script>
   </body>
 </html>

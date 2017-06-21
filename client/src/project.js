@@ -7,11 +7,11 @@ class Project {
 
   render() {
     return (
-      `<div class="col s6 m6" data-id=${this.id}>
-        <div class="card blue-grey darken-1">
-          <div class="card-content white-text">
-            <span class="card-title">${this.title}</span>
-            <p>Created by: ${this.creator}</p>
+      `<div class="col s6 m6">
+        <div class="card blue-grey darken-1" data-id=${this.id}>
+          <div class="card-content white-text" data-id=${this.id}>
+            <span class="card-title" data-id=${this.id}>${this.title}</span>
+            <p data-id=${this.id}>Created by: ${this.creator}</p>
           </div>
         </div>
       </div>`
