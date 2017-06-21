@@ -20,12 +20,10 @@ class Space {
         json.nodes.forEach(node => this.addNode(node))
       })
       .then(() => {
+        this.render()
         if (this.nodeList.length === 0) {
           this.renderForm()
-        } else {
-          this.render()
-        }
-      })
+        }})
   }
 
   addNode(obj) {
@@ -81,20 +79,59 @@ class Space {
   }
 
   renderForm(parentId) {
-    let title = prompt("Node Title: ")
-    let body = prompt("Node Body: ")
-    if (title === null || title === "") {
-      alert("Title cannot be blank")
-    } else {
-      this.adapter.createNode({
-        title: title,
-        body: body,
-        parent_id: parentId,
-        space_id: this.id
-      })
-        .then(resp => resp.json())
-        .then(() => this.fetchNodes())
+    if (!$('#form')[0]) {
+      $('#main').append(`
+        <div class="card blue-grey" style="
+            width: ${this.stage.canvas.width * .6}px;
+            height: 150px;
+            top: ${-this.stage.canvas.height}px;
+            left: ${this.stage.canvas.width / 2 - this.stage.canvas.width * .3}px
+          " id="form">
+          <form class="card-content white-text" id="form-info">
+            <input class="card-title" type="text" name="title" value="" id="title" placeholder="Title" required>
+            <input type="text" name="creator" value="" id="body" placeholder="Body">
+            <button class="btn-floating halfway-fab waves-effect waves-light green" type="submit" value="Submit">
+              <i class="material-icons">add</i>
+            </button>
+          </form>
+        </div>
+        `)
+
+      $("#cancel").click(() => $('#form').remove())
+
+      $("#form-info").submit(this.addNodeFromForm.bind(this, parentId))
+
+      if (parentId) {
+        $('#form-info').append(`
+          <a class="btn-floating halfway-fab waves-effect waves-light left red" id="remove"><i class="material-icons">delete</i></a>
+          <a class="btn-floating halfway-fab waves-effect waves-light left blue-grey lighten-2" id="cancel"style="left: ${this.stage.canvas.width * .3 - 18}px">
+          <i class="material-icons">not_interested</i></a>
+        `)
+        $("#remove").click(this.deleteNodeFromForm.bind(this, parentId))
+      }
     }
+  }
+
+  addNodeFromForm(parentId) {
+    event.preventDefault()
+    let title = $('#title').val()
+    let body = $('#body').val()
+    $('#form').remove()
+    this.adapter.createNode({
+      title: title,
+      body: body,
+      parent_id: parentId,
+      space_id: this.id
+    })
+      .then(resp => resp.json())
+      .then(() => this.fetchNodes())
+
+  }
+
+  deleteNodeFromForm(id) {
+    $('#form').remove()
+    this.adapter.destroyNode(id)
+      .then(() => this.fetchNodes())
   }
 
   renderSpace() {
