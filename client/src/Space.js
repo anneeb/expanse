@@ -5,6 +5,7 @@ class Space {
     this.creator = creator
     this.adapter = new Adapter
     this.nodeList = []
+    this.creationStep = {}
     this.nextNode = 0
     this.stage = new createjs.Stage("space")
     this.stage.enableDOMEvents(true)
@@ -46,31 +47,28 @@ class Space {
       let currentNodeParent = this.nodeList.find(node => node.id === parentId)
       let parentX = currentNodeParent.container.x
       let parentY = currentNodeParent.container.y
+      let childMade = this.creationStep.parentId
 
       // array format: [[x, y, w, h], [startX, startY, endX, endY]]
-      if (this.nextNode === 1) {
-          return [[parentX, parentY + 100, 50, 50], [parentX + 25, parentY + 55, parentX + 25, parentY + 100]]
+      if (childMade === 0) {
+          this.creationStep.parentId++
+          return [[parentX, parentY + 100, 50, 50], [parentX, parentY + 55, parentX, parentY + 100]]
 
-      } else if (this.nextNode % 2 === 0) {
+      } else if (childMade % 2 === 0) {
           let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
           this.boxChangeLeft += 100
           this.lineChangeLeft += 100
+          this.creationStep.parentId++
           return x
 
-        } else if (this.nextNode % 2 !== 0) {
+        } else if (childMade % 2 !== 0) {
           let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
           this.boxChangeRight += 100
           this.lineChangeRight += 100
+          this.creationStep.parentId++
           return x
         }
       }
-
-
-
-
-
-
-
 
 
     // if (this.nextNode === 0) {
@@ -101,13 +99,16 @@ class Space {
   renderSpace() {
     this.stage.removeAllChildren()
     for (let i = 0; i < this.nodeList.length; i++) {
+      this.creationStep[`${this.nodeList[i].id}`] = 0
+
       this.nodeList[i].render(this.nodeDim(this.nodeList[i].parentId))
+
       this.stage.addChild(this.nodeList[i].container)
-      if (this.nextNode !== 0) {this.stage.addChild(this.nodeList[i].line)}
-      this.nextNode += 1
+
+      if (!this.nodeList[i].parentId) {this.stage.addChild(this.nodeList[i].line)}
     }
     this.stage.update()
-    this.nextNode = 0
+    this.creationStep = {}
     this.boxChangeLeft = 100
     this.boxChangeRight = 100
     this.lineChangeLeft = 75
