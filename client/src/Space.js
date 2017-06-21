@@ -3,10 +3,15 @@ class Space {
     this.nodeList = []
     this.nextNode = 0
     this.stage = new createjs.Stage("space")
+    this.stage.enableDOMEvents(true)
+    this.stage.on("click", function(evt) {
+    console.log(`target: ${evt.target}`)
+});
+
+
 
     this.boxChangeLeft = 100
     this.boxChangeRight = 100
-
     this.lineChangeLeft = 75
     this.lineChangeRight = 125
   }
