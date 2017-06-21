@@ -36,19 +36,19 @@ class Space {
 
   nodeDim(frank) {
     if (this.nextNode === 0) {
-        return [[this.stage.canvas.width / 2, 2, 50, 50], [0]]
+        return [[this.stage.canvas.width / 2, 5, 50, 50], [0]]
     } else if (this.nextNode === 1) {
-        return [[this.stage.canvas.width / 2, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 50, (this.stage.canvas.width / 2) + 25, 100]]
+        return [[this.stage.canvas.width / 2, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + 25, 100]]
 
 
     } else if (this.nextNode % 2 === 0) {
-        let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 50, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
+        let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
         this.boxChangeLeft += 100
         this.lineChangeLeft += 100
         return x
 
       } else if (this.nextNode % 2 !== 0) {
-        let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 50, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
+        let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
         this.boxChangeRight += 100
         this.lineChangeRight += 100
         return x
