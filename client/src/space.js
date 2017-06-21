@@ -97,7 +97,7 @@ class Space {
         </div>
         `)
 
-      $("#cancel").click(() => $('#form').remove())
+
 
       $("#form-info").submit(this.addNodeFromForm.bind(this, parentId))
 
@@ -108,6 +108,8 @@ class Space {
           <i class="material-icons">not_interested</i></a>
         `)
         $("#remove").click(this.deleteNodeFromForm.bind(this, parentId))
+
+        $("#cancel").click(() => $('#form').remove())
       }
     }
   }
