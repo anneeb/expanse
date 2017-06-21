@@ -35,7 +35,7 @@ class Space {
 
   nodeDim(parentId) {
     if (!parentId) {
-      return [[this.stage.canvas.width / 2, 5, 50, 50], [0]]
+      return [[this.stage.canvas.width / 2 - 25, 5, 50, 50], [0]]
     } else {
       let currentNodeParent = this.nodeList.find(node => node.id === parentId)
       let parentX = currentNodeParent.container.x
