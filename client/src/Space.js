@@ -43,53 +43,31 @@ class Space {
     if (!parentId) {
       return [[this.stage.canvas.width / 2, 5, 50, 50], [0]]
     } else {
-      // console.log(this.nodeList)
       let currentNodeParent = this.nodeList.find(node => node.id === parentId)
       let parentX = currentNodeParent.container.x
       let parentY = currentNodeParent.container.y
-      let childMade = this.creationStep.parentId
-
-      console.log(childMade)
+      let childMade = this.creationStep[`${parentId}`]
 
       // array format: [[x, y, w, h], [startX, startY, endX, endY]]
       if (childMade === 0) {
-          console.log(this.creationStep)
-          this.creationStep.parentId++
-          console.log(this.creationStep)
-          return [[parentX, parentY + 100, 50, 50], [parentX, parentY + 55, parentX, parentY + 100]]
+          this.creationStep[`${parentId}`]++
+          return [[parentX, parentY + 100, 50, 50], [parentX + 25, parentY + 50, parentX + 25, parentY + 100]]
 
       } else if (childMade % 2 === 0) {
           let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
           this.boxChangeLeft += 100
           this.lineChangeLeft += 100
-          this.creationStep.parentId++
+          this.creationStep[`${parentId}`]++
           return x
 
         } else if (childMade % 2 !== 0) {
           let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
           this.boxChangeRight += 100
           this.lineChangeRight += 100
-          this.creationStep.parentId++
+          this.creationStep[`${parentId}`]++
           return x
         }
       }
-
-
-    // if (this.nextNode === 0) {
-    //     return [[this.stage.canvas.width / 2, 5, 50, 50], [0]]
-    // } else if (this.nextNode === 1) {
-    //     return [[this.stage.canvas.width / 2, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + 25, 100]]
-    // } else if (this.nextNode % 2 === 0) {
-    //     let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
-    //     this.boxChangeLeft += 100
-    //     this.lineChangeLeft += 100
-    //     return x
-    //   } else if (this.nextNode % 2 !== 0) {
-    //     let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
-    //     this.boxChangeRight += 100
-    //     this.lineChangeRight += 100
-    //     return x
-    //   }
   }
 
   setParent(event) {

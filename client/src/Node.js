@@ -17,7 +17,6 @@ class Node {
     let square = new createjs.Shape()
     let label = new createjs.Text(`${this.title}`, "10px Arial", "white")
     square.name = this.id
-    console.log(this.id);
     square.graphics.setStrokeStyle(1).beginStroke("black").beginFill("black").drawRect(0, 0, 50, 50)
     container.x = array[0][0]
     container.y = array[0][1]
