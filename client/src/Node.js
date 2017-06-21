@@ -1,18 +1,22 @@
 class Node {
-  constructor(title, body) {
+  constructor(space, id, title, body, spaceId, parentId, numChild) {
+    this.space = space
+    this.id = id
+    this.parentId = parentId
     this.title = title
     this.body = body
+    this.spaceId = spaceId
+    this.numChild = numChild
     this.container
     this.line
   }
-
 
   drawBox(array) {
     // array format: [[x, y, w, h], [startX, startY, endX, endY]]
     let container = new createjs.Container()
     let square = new createjs.Shape()
     let label = new createjs.Text(`${this.title}`, "10px Arial", "white")
-    square.name = this.title
+    square.name = this.id
     square.graphics.setStrokeStyle(1).beginStroke("black").beginFill("black").drawRect(0, 0, 50, 50)
     container.x = array[0][0]
     container.y = array[0][1]

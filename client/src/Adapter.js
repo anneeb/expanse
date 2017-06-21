@@ -21,7 +21,6 @@ class Adapter {
     var form = new FormData
     form.append("space[title]", obj['title'])
     form.append("space[creator]", obj['creator'])
-
     return fetch(this.spaces, {
       method: 'post',
       body: form

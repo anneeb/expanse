@@ -1,43 +1,81 @@
 class Space {
-  constructor() {
+  constructor(title, creator) {
+    this.id
+    this.title = title
+    this.creator = creator
+    this.adapter = new Adapter
     this.nodeList = []
+    this.howToRender = {}
     this.nextNode = 0
     this.stage = new createjs.Stage("space")
     this.stage.enableDOMEvents(true)
-    this.stage.on("click", this.test.bind(this))
-    this.boxChangeLeft = 100
-    this.boxChangeRight = 100
-    this.lineChangeLeft = 75
-    this.lineChangeRight = 125
+    this.stage.on("click", this.setParent.bind(this))
+    this.parentIdInput = $("#node-parent-id")
+    this.save()
   }
 
-  addNode(title, body) {
-    var newNode = new Node(title, body)
+  save(){
+    this.adapter.createSpace({title: this.title, creator: this.creator})
+      .then(resp => resp.json())
+      .then(json => this.id = json.data.id)
+  }
+
+  fetchNodes() {
+    this.adapter.getSpaceById(this.id)
+      .then(resp => resp.json())
+      .then(json => {
+        this.nodeList = []
+        json.nodes.forEach(node => this.addNode(node))
+      })
+      .then(() => this.render())
+  }
+
+  addNode(obj) {
+    var newNode = new Node(this, obj.id, obj.title, obj.body, obj.space_id, obj.parent_id, obj.num_child)
     this.nodeList.push(newNode)
   }
 
-  nodeDim(frank) {
-    if (this.nextNode === 0) {
-        return [[this.stage.canvas.width / 2, 5, 50, 50], [0]]
-    } else if (this.nextNode === 1) {
-        return [[this.stage.canvas.width / 2, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + 25, 100]]
-    } else if (this.nextNode % 2 === 0) {
-        let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
-        this.boxChangeLeft += 100
-        this.lineChangeLeft += 100
-        return x
-      } else if (this.nextNode % 2 !== 0) {
-        let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
-        this.boxChangeRight += 100
-        this.lineChangeRight += 100
-        return x
+  nodeDim(parentId) {
+    if (!parentId) {
+      return [[this.stage.canvas.width / 2, 5, 50, 50], [0]]
+    } else {
+      let currentNodeParent = this.nodeList.find(node => node.id === parentId)
+      let parentX = currentNodeParent.container.x
+      let parentY = currentNodeParent.container.y
+      let parentInfo = this.howToRender[`${parentId}`]
+
+      // array format: [[x, y, w, h], [startX, startY, endX, endY]]
+      if (parentInfo.childMade === 0) {
+          this.howToRender[`${parentId}`].childMade++
+          return [[parentX, parentY + 100, 50, 50], [parentX + 25, parentY + 50, parentX + 25, parentY + 100]]
+
+      } else if (parentInfo.childMade % 2 === 0) {
+          let x = [
+            [parentX - parentInfo.boxLeft, parentY + 100, 50, 50],
+            [parentX + 25, parentY + 50, parentX - parentInfo.lineLeft, parentY + 100]
+          ]
+          parentInfo.boxLeft += 100
+          parentInfo.lineLeft += 100
+          parentInfo.childMade++
+          return x
+
+        } else if (parentInfo.childMade % 2 !== 0) {
+          let x = [
+            [parentX + parentInfo.boxRight, parentY + 100, 50, 50],
+            [parentX + 25, parentY + 50, parentX + parentInfo.lineRight, parentY + 100]
+          ]
+          parentInfo.boxRight += 100
+          parentInfo.lineRight += 100
+          parentInfo.childMade++
+          return x
+        }
       }
   }
 
-  test(event) {
+  setParent(event) {
     for (let i = 0; i < this.nodeList.length; i++) {
       if (this.nodeList[i].container.children[0].name === event.target.name) {
-        console.log(`What Should I Do With: ${this.nodeList[i].container.children[0].name}`);
+        this.parentIdInput.val(event.target.name)
       }
     }
   }
@@ -45,17 +83,22 @@ class Space {
   renderSpace() {
     this.stage.removeAllChildren()
     for (let i = 0; i < this.nodeList.length; i++) {
-      this.nodeList[i].render(this.nodeDim())
+      this.howToRender[`${this.nodeList[i].id}`] = {
+        childMade: 0,
+        boxLeft: 100,
+        boxRight: 100,
+        lineLeft: 75,
+        lineRight: 125
+      }
+
+      this.nodeList[i].render(this.nodeDim(this.nodeList[i].parentId))
+
       this.stage.addChild(this.nodeList[i].container)
-      if (this.nextNode !== 0) {this.stage.addChild(this.nodeList[i].line)}
-      this.nextNode += 1
+
+      if (this.nodeList[i].parentId) {this.stage.addChild(this.nodeList[i].line)}
     }
     this.stage.update()
-    this.nextNode = 0
-    this.boxChangeLeft = 100
-    this.boxChangeRight = 100
-    this.lineChangeLeft = 75
-    this.lineChangeRight = 125
+    this.howToRender = {}
   }
 
   render() {

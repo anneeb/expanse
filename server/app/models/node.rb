@@ -4,4 +4,8 @@ class Node < ApplicationRecord
   belongs_to :parent, class_name: "Node", optional: true
   validates :title, presence: true
 
+  def num_child
+    self.children.length
+  end
+
 end
