@@ -49,9 +49,13 @@ class Space {
       let parentY = currentNodeParent.container.y
       let childMade = this.creationStep.parentId
 
+      console.log(childMade)
+
       // array format: [[x, y, w, h], [startX, startY, endX, endY]]
       if (childMade === 0) {
+          console.log(this.creationStep)
           this.creationStep.parentId++
+          console.log(this.creationStep)
           return [[parentX, parentY + 100, 50, 50], [parentX, parentY + 55, parentX, parentY + 100]]
 
       } else if (childMade % 2 === 0) {
@@ -105,7 +109,7 @@ class Space {
 
       this.stage.addChild(this.nodeList[i].container)
 
-      if (!this.nodeList[i].parentId) {this.stage.addChild(this.nodeList[i].line)}
+      if (this.nodeList[i].parentId) {this.stage.addChild(this.nodeList[i].line)}
     }
     this.stage.update()
     this.creationStep = {}

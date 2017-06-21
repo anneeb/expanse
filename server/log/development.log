@@ -3576,3 +3576,260 @@ Processing by Api::V1::SpacesController#show as */*
 Completed 200 OK in 8ms (Views: 5.4ms | ActiveRecord: 1.0ms)
 
 
+Started POST "/api/v1/spaces/" for 127.0.0.1 at 2017-06-21 13:40:14 -0400
+Processing by Api::V1::SpacesController#create as */*
+  Parameters: {"space"=>{"title"=>"Test", "creator"=>"Carl"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "spaces" ("title", "creator", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Test"], ["creator", "Carl"], ["created_at", "2017-06-21 17:40:14.505794"], ["updated_at", "2017-06-21 17:40:14.505794"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpace Load (0.8ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" ORDER BY "spaces"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.51ms)
+Completed 200 OK in 8ms (Views: 1.0ms | ActiveRecord: 2.1ms)
+
+
+Started POST "/api/v1/nodes/" for 127.0.0.1 at 2017-06-21 13:40:15 -0400
+Processing by Api::V1::NodesController#create as */*
+  Parameters: {"node"=>{"title"=>"asdf", "body"=>"", "parent_id"=>"", "space_id"=>"72"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpace Load (0.3ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 72], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "asdf"], ["body", ""], ["space_id", 72], ["created_at", "2017-06-21 17:40:15.896159"], ["updated_at", "2017-06-21 17:40:15.896159"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNode Load (0.4ms)[0m  [1m[34mSELECT  "nodes".* FROM "nodes" ORDER BY "nodes"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.43ms)
+Completed 200 OK in 9ms (Views: 0.9ms | ActiveRecord: 1.9ms)
+
+
+Started GET "/api/v1/spaces/72" for 127.0.0.1 at 2017-06-21 13:40:15 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"72"}
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 72], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 72]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 118]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (4.28ms)
+Completed 200 OK in 6ms (Views: 4.2ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/api/v1/nodes/" for 127.0.0.1 at 2017-06-21 13:40:18 -0400
+Processing by Api::V1::NodesController#create as */*
+  Parameters: {"node"=>{"title"=>"r", "body"=>"", "parent_id"=>"118", "space_id"=>"72"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 72], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "parent_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "r"], ["body", ""], ["space_id", 72], ["parent_id", 118], ["created_at", "2017-06-21 17:40:18.674204"], ["updated_at", "2017-06-21 17:40:18.674204"]]
+  [1m[35m (2.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNode Load (0.7ms)[0m  [1m[34mSELECT  "nodes".* FROM "nodes" ORDER BY "nodes"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.5ms)
+Completed 200 OK in 11ms (Views: 1.0ms | ActiveRecord: 4.1ms)
+
+
+Started GET "/api/v1/spaces/72" for 127.0.0.1 at 2017-06-21 13:40:18 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"72"}
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 72], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 72]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 118]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 119]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (5.38ms)
+Completed 200 OK in 8ms (Views: 5.5ms | ActiveRecord: 1.0ms)
+
+
+Started POST "/api/v1/spaces/" for 127.0.0.1 at 2017-06-21 13:42:21 -0400
+Processing by Api::V1::SpacesController#create as */*
+  Parameters: {"space"=>{"title"=>"Test", "creator"=>"Carl"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[32mINSERT INTO "spaces" ("title", "creator", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Test"], ["creator", "Carl"], ["created_at", "2017-06-21 17:42:21.674179"], ["updated_at", "2017-06-21 17:42:21.674179"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpace Load (0.6ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" ORDER BY "spaces"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.71ms)
+Completed 200 OK in 9ms (Views: 1.4ms | ActiveRecord: 2.3ms)
+
+
+Started POST "/api/v1/nodes/" for 127.0.0.1 at 2017-06-21 13:42:23 -0400
+Processing by Api::V1::NodesController#create as */*
+  Parameters: {"node"=>{"title"=>"asdf", "body"=>"", "parent_id"=>"", "space_id"=>"73"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpace Load (0.3ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 73], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "asdf"], ["body", ""], ["space_id", 73], ["created_at", "2017-06-21 17:42:23.446504"], ["updated_at", "2017-06-21 17:42:23.446504"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNode Load (0.4ms)[0m  [1m[34mSELECT  "nodes".* FROM "nodes" ORDER BY "nodes"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.4ms)
+Completed 200 OK in 8ms (Views: 0.8ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/api/v1/spaces/73" for 127.0.0.1 at 2017-06-21 13:42:23 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"73"}
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 73], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 73]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 120]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (4.24ms)
+Completed 200 OK in 6ms (Views: 4.3ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/api/v1/spaces/" for 127.0.0.1 at 2017-06-21 13:42:44 -0400
+Processing by Api::V1::SpacesController#create as */*
+  Parameters: {"space"=>{"title"=>"Test", "creator"=>"Carl"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "spaces" ("title", "creator", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Test"], ["creator", "Carl"], ["created_at", "2017-06-21 17:42:44.541253"], ["updated_at", "2017-06-21 17:42:44.541253"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpace Load (0.6ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" ORDER BY "spaces"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.41ms)
+Completed 200 OK in 8ms (Views: 0.8ms | ActiveRecord: 2.3ms)
+
+
+Started POST "/api/v1/nodes/" for 127.0.0.1 at 2017-06-21 13:42:46 -0400
+Processing by Api::V1::NodesController#create as */*
+  Parameters: {"node"=>{"title"=>"asdf", "body"=>"", "parent_id"=>"", "space_id"=>"74"}}
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 74], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "asdf"], ["body", ""], ["space_id", 74], ["created_at", "2017-06-21 17:42:46.313491"], ["updated_at", "2017-06-21 17:42:46.313491"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNode Load (0.5ms)[0m  [1m[34mSELECT  "nodes".* FROM "nodes" ORDER BY "nodes"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.59ms)
+Completed 200 OK in 10ms (Views: 1.1ms | ActiveRecord: 3.3ms)
+
+
+Started GET "/api/v1/spaces/74" for 127.0.0.1 at 2017-06-21 13:42:46 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"74"}
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 74], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.9ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 74]]
+[active_model_serializers]   [1m[36mNode Load (0.4ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 121]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (6.29ms)
+Completed 200 OK in 9ms (Views: 5.7ms | ActiveRecord: 1.5ms)
+
+
+Started POST "/api/v1/nodes/" for 127.0.0.1 at 2017-06-21 13:42:49 -0400
+Processing by Api::V1::NodesController#create as */*
+  Parameters: {"node"=>{"title"=>"sdf", "body"=>"", "parent_id"=>"121", "space_id"=>"74"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 74], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "parent_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "sdf"], ["body", ""], ["space_id", 74], ["parent_id", 121], ["created_at", "2017-06-21 17:42:49.056282"], ["updated_at", "2017-06-21 17:42:49.056282"]]
+  [1m[35m (2.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNode Load (0.5ms)[0m  [1m[34mSELECT  "nodes".* FROM "nodes" ORDER BY "nodes"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.52ms)
+Completed 200 OK in 10ms (Views: 1.0ms | ActiveRecord: 3.6ms)
+
+
+Started GET "/api/v1/spaces/74" for 127.0.0.1 at 2017-06-21 13:42:49 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"74"}
+  [1m[36mSpace Load (0.3ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 74], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 74]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 121]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 122]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (4.82ms)
+Completed 200 OK in 7ms (Views: 4.7ms | ActiveRecord: 0.9ms)
+
+
+Started POST "/api/v1/spaces/" for 127.0.0.1 at 2017-06-21 13:45:07 -0400
+Processing by Api::V1::SpacesController#create as */*
+  Parameters: {"space"=>{"title"=>"Test", "creator"=>"Carl"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "spaces" ("title", "creator", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Test"], ["creator", "Carl"], ["created_at", "2017-06-21 17:45:07.510879"], ["updated_at", "2017-06-21 17:45:07.510879"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpace Load (0.8ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" ORDER BY "spaces"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.67ms)
+Completed 200 OK in 8ms (Views: 1.3ms | ActiveRecord: 2.4ms)
+
+
+Started POST "/api/v1/nodes/" for 127.0.0.1 at 2017-06-21 13:45:08 -0400
+Processing by Api::V1::NodesController#create as */*
+  Parameters: {"node"=>{"title"=>"asdf", "body"=>"", "parent_id"=>"", "space_id"=>"75"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 75], ["LIMIT", 1]]
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "asdf"], ["body", ""], ["space_id", 75], ["created_at", "2017-06-21 17:45:08.609453"], ["updated_at", "2017-06-21 17:45:08.609453"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNode Load (0.4ms)[0m  [1m[34mSELECT  "nodes".* FROM "nodes" ORDER BY "nodes"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.46ms)
+Completed 200 OK in 9ms (Views: 1.0ms | ActiveRecord: 2.1ms)
+
+
+Started GET "/api/v1/spaces/75" for 127.0.0.1 at 2017-06-21 13:45:08 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"75"}
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 75], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 75]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 123]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (3.97ms)
+Completed 200 OK in 6ms (Views: 3.9ms | ActiveRecord: 0.7ms)
+
+
+Started POST "/api/v1/nodes/" for 127.0.0.1 at 2017-06-21 13:45:12 -0400
+Processing by Api::V1::NodesController#create as */*
+  Parameters: {"node"=>{"title"=>"sdf", "body"=>"", "parent_id"=>"123", "space_id"=>"75"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 75], ["LIMIT", 1]]
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "parent_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["title", "sdf"], ["body", ""], ["space_id", 75], ["parent_id", 123], ["created_at", "2017-06-21 17:45:12.136955"], ["updated_at", "2017-06-21 17:45:12.136955"]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNode Load (0.6ms)[0m  [1m[34mSELECT  "nodes".* FROM "nodes" ORDER BY "nodes"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.42ms)
+Completed 200 OK in 10ms (Views: 0.9ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/api/v1/spaces/75" for 127.0.0.1 at 2017-06-21 13:45:12 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"75"}
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 75], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 75]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 123]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 124]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (4.75ms)
+Completed 200 OK in 7ms (Views: 4.7ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/api/v1/spaces/" for 127.0.0.1 at 2017-06-21 13:45:32 -0400
+Processing by Api::V1::SpacesController#create as */*
+  Parameters: {"space"=>{"title"=>"Test", "creator"=>"Carl"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.6ms)[0m  [1m[32mINSERT INTO "spaces" ("title", "creator", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Test"], ["creator", "Carl"], ["created_at", "2017-06-21 17:45:32.903055"], ["updated_at", "2017-06-21 17:45:32.903055"]]
+  [1m[35m (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mSpace Load (0.7ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" ORDER BY "spaces"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.6ms)
+Completed 200 OK in 7ms (Views: 1.3ms | ActiveRecord: 1.9ms)
+
+
+Started POST "/api/v1/nodes/" for 127.0.0.1 at 2017-06-21 13:45:34 -0400
+Processing by Api::V1::NodesController#create as */*
+  Parameters: {"node"=>{"title"=>"asdf", "body"=>"", "parent_id"=>"", "space_id"=>"76"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 76], ["LIMIT", 1]]
+  [1m[35mSQL (0.5ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "asdf"], ["body", ""], ["space_id", 76], ["created_at", "2017-06-21 17:45:34.424323"], ["updated_at", "2017-06-21 17:45:34.424323"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNode Load (0.4ms)[0m  [1m[34mSELECT  "nodes".* FROM "nodes" ORDER BY "nodes"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.42ms)
+Completed 200 OK in 8ms (Views: 0.9ms | ActiveRecord: 1.8ms)
+
+
+Started GET "/api/v1/spaces/76" for 127.0.0.1 at 2017-06-21 13:45:34 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"76"}
+  [1m[36mSpace Load (0.3ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 76], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 76]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 125]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (3.96ms)
+Completed 200 OK in 6ms (Views: 3.9ms | ActiveRecord: 0.8ms)
+
+
+Started POST "/api/v1/nodes/" for 127.0.0.1 at 2017-06-21 13:45:47 -0400
+Processing by Api::V1::NodesController#create as */*
+  Parameters: {"node"=>{"title"=>"sdf", "body"=>"", "parent_id"=>"", "space_id"=>"76"}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mSpace Load (0.3ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 76], ["LIMIT", 1]]
+  [1m[35mSQL (0.7ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "sdf"], ["body", ""], ["space_id", 76], ["created_at", "2017-06-21 17:45:47.817660"], ["updated_at", "2017-06-21 17:45:47.817660"]]
+  [1m[35m (1.9ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mNode Load (0.5ms)[0m  [1m[34mSELECT  "nodes".* FROM "nodes" ORDER BY "nodes"."id" DESC LIMIT $1[0m  [["LIMIT", 1]]
+[active_model_serializers] Rendered ActiveModel::Serializer::Null with Hash (0.41ms)
+Completed 200 OK in 11ms (Views: 0.9ms | ActiveRecord: 3.5ms)
+
+
+Started GET "/api/v1/spaces/76" for 127.0.0.1 at 2017-06-21 13:45:47 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"76"}
+  [1m[36mSpace Load (0.2ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 76], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 76]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 125]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 126]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (5.26ms)
+Completed 200 OK in 7ms (Views: 5.1ms | ActiveRecord: 0.9ms)
+
+
