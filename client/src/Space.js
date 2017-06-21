@@ -5,15 +5,11 @@ class Space {
     this.creator = creator
     this.adapter = new Adapter
     this.nodeList = []
-    this.creationStep = {}
+    this.howToRender = {}
     this.nextNode = 0
     this.stage = new createjs.Stage("space")
     this.stage.enableDOMEvents(true)
     this.stage.on("click", this.setParent.bind(this))
-    this.boxChangeLeft = 100
-    this.boxChangeRight = 100
-    this.lineChangeLeft = 75
-    this.lineChangeRight = 125
     this.parentIdInput = $("#node-parent-id")
     this.save()
   }
@@ -46,25 +42,31 @@ class Space {
       let currentNodeParent = this.nodeList.find(node => node.id === parentId)
       let parentX = currentNodeParent.container.x
       let parentY = currentNodeParent.container.y
-      let childMade = this.creationStep[`${parentId}`]
+      let parentInfo = this.howToRender[`${parentId}`]
 
       // array format: [[x, y, w, h], [startX, startY, endX, endY]]
-      if (childMade === 0) {
-          this.creationStep[`${parentId}`]++
+      if (parentInfo.childMade === 0) {
+          this.howToRender[`${parentId}`].childMade++
           return [[parentX, parentY + 100, 50, 50], [parentX + 25, parentY + 50, parentX + 25, parentY + 100]]
 
-      } else if (childMade % 2 === 0) {
-          let x = [[(this.stage.canvas.width / 2) - this.boxChangeLeft, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) - this.lineChangeLeft, 100]]
-          this.boxChangeLeft += 100
-          this.lineChangeLeft += 100
-          this.creationStep[`${parentId}`]++
+      } else if (parentInfo.childMade % 2 === 0) {
+          let x = [
+            [parentX - parentInfo.boxLeft, parentY + 100, 50, 50],
+            [parentX + 25, parentY + 50, parentX - parentInfo.lineLeft, parentY + 100]
+          ]
+          parentInfo.boxLeft += 100
+          parentInfo.lineLeft += 100
+          parentInfo.childMade++
           return x
 
-        } else if (childMade % 2 !== 0) {
-          let x = [[(this.stage.canvas.width / 2) + this.boxChangeRight, 100, 50, 50], [(this.stage.canvas.width / 2) + 25, 55, (this.stage.canvas.width / 2) + this.lineChangeRight, 100]]
-          this.boxChangeRight += 100
-          this.lineChangeRight += 100
-          this.creationStep[`${parentId}`]++
+        } else if (parentInfo.childMade % 2 !== 0) {
+          let x = [
+            [parentX + parentInfo.boxRight, parentY + 100, 50, 50],
+            [parentX + 25, parentY + 50, parentX + parentInfo.lineRight, parentY + 100]
+          ]
+          parentInfo.boxRight += 100
+          parentInfo.lineRight += 100
+          parentInfo.childMade++
           return x
         }
       }
@@ -81,7 +83,13 @@ class Space {
   renderSpace() {
     this.stage.removeAllChildren()
     for (let i = 0; i < this.nodeList.length; i++) {
-      this.creationStep[`${this.nodeList[i].id}`] = 0
+      this.howToRender[`${this.nodeList[i].id}`] = {
+        childMade: 0,
+        boxLeft: 100,
+        boxRight: 100,
+        lineLeft: 75,
+        lineRight: 125
+      }
 
       this.nodeList[i].render(this.nodeDim(this.nodeList[i].parentId))
 
@@ -90,11 +98,7 @@ class Space {
       if (this.nodeList[i].parentId) {this.stage.addChild(this.nodeList[i].line)}
     }
     this.stage.update()
-    this.creationStep = {}
-    this.boxChangeLeft = 100
-    this.boxChangeRight = 100
-    this.lineChangeLeft = 75
-    this.lineChangeRight = 125
+    this.howToRender = {}
   }
 
   render() {
