@@ -1,5 +1,6 @@
 $(document).ready(function(){
   const aSpace = new App()
+  setCanvas()
 })
 
 class App {
@@ -25,4 +26,16 @@ class App {
   render() {
     this.space.render()
   }
+}
+
+function setCanvas(){
+ var canvasNode = document.getElementById('space')
+
+ var pw = canvasNode.parentNode.clientWidth
+ var ph = canvasNode.parentNode.clientHeight
+
+ canvasNode.height = pw * 0.8 * (canvasNode.height/canvasNode.width)
+ canvasNode.width = pw * 1
+ canvasNode.style.top = (ph-canvasNode.height)/2 + "px"
+ canvasNode.style.left = (pw-canvasNode.width)/2 + "px"
 }
