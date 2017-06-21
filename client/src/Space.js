@@ -8,11 +8,12 @@ class Space {
     this.nextNode = 0
     this.stage = new createjs.Stage("space")
     this.stage.enableDOMEvents(true)
-    this.stage.on("click", this.test.bind(this))
+    this.stage.on("click", this.setParent.bind(this))
     this.boxChangeLeft = 100
     this.boxChangeRight = 100
     this.lineChangeLeft = 75
     this.lineChangeRight = 125
+    this.parentIdInput = $("#node-parent-id")
     this.save()
   }
 
@@ -22,9 +23,9 @@ class Space {
       .then(json => this.id = json.data.id)
   }
 
-  addNode(title, body) {
-    var newNode = new Node(title, body, this.id)
-    this.nodeList.push(newNode)
+  addNode(title, body, parentId) {
+    var newNode = new Node(this, title, body, this.id, parentId)
+    newNode.save()
   }
 
   nodeDim(frank) {
@@ -45,10 +46,10 @@ class Space {
       }
   }
 
-  test(event) {
+  setParent(event) {
     for (let i = 0; i < this.nodeList.length; i++) {
       if (this.nodeList[i].container.children[0].name === event.target.name) {
-        console.log(`What Should I Do With: ${this.nodeList[i].container.children[0].name}`);
+        this.parentIdInput.val(event.target.name)
       }
     }
   }

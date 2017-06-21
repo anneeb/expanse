@@ -8,7 +8,7 @@ class App {
     this.space = new Space("Test", "Carl")
     this.nodeTitle = $('#node-title')
     this.nodeBody = $('#node-body')
-    this.nodeParent = $('#node-parent')
+    this.nodeParent = $('#node-parent-id')
     this.submitButton = $('#add')
     this.submitButton.click(this.onSubmit.bind(this))
   }
@@ -20,12 +20,12 @@ class App {
     this.nodeTitle.val('')
     this.nodeBody.val('')
     this.nodeParent.val('')
-    this.render()
+    // this.render()
   }
 
-  render() {
-    this.space.render()
-  }
+  // render() {
+  //   this.space.render()
+  // }
 }
 
 function setCanvas(){

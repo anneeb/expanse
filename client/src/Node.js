@@ -1,5 +1,6 @@
 class Node {
-  constructor(title, body, spaceId, parentId = null) {
+  constructor(space, title, body, spaceId, parentId) {
+    this.space = space
     this.id
     this.parentId = parentId
     this.title = title
@@ -7,15 +8,20 @@ class Node {
     this.spaceId = spaceId
     this.container
     this.line
-    this.save()
+    this.adapter = new Adapter
   }
 
   save() {
-    this.adapter.createSpace({title: this.title, creator: this.creator})
+    this.adapter.createNode({
+      title: this.title,
+      body: this.body,
+      parent_id: this.parentId,
+      space_id: this.spaceId
+    })
       .then(resp => resp.json())
-      .then(json => {
-        this.id = json.data.id
-      })
+      .then(json => this.id = json.data.id)
+      .then(() => this.space.nodeList.push(this))
+      .then(() => this.space.render())
   }
 
   drawBox(array) {
@@ -23,7 +29,8 @@ class Node {
     let container = new createjs.Container()
     let square = new createjs.Shape()
     let label = new createjs.Text(`${this.title}`, "10px Arial", "white")
-    square.name = this.title
+    square.name = this.id
+    console.log(this.id);
     square.graphics.setStrokeStyle(1).beginStroke("black").beginFill("black").drawRect(0, 0, 50, 50)
     container.x = array[0][0]
     container.y = array[0][1]
