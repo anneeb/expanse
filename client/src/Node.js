@@ -1,11 +1,22 @@
 class Node {
-  constructor(title, body) {
+  constructor(title, body, spaceId, parentId = null) {
+    this.id
+    this.parentId = parentId
     this.title = title
     this.body = body
+    this.spaceId = spaceId
     this.container
     this.line
+    this.save()
   }
 
+  save() {
+    this.adapter.createSpace({title: this.title, creator: this.creator})
+      .then(resp => resp.json())
+      .then(json => {
+        this.id = json.data.id
+      })
+  }
 
   drawBox(array) {
     // array format: [[x, y, w, h], [startX, startY, endX, endY]]

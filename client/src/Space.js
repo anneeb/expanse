@@ -1,5 +1,9 @@
 class Space {
-  constructor() {
+  constructor(title, creator) {
+    this.id
+    this.title = title
+    this.creator = creator
+    this.adapter = new Adapter
     this.nodeList = []
     this.nextNode = 0
     this.stage = new createjs.Stage("space")
@@ -9,10 +13,17 @@ class Space {
     this.boxChangeRight = 100
     this.lineChangeLeft = 75
     this.lineChangeRight = 125
+    this.save()
+  }
+
+  save(){
+    this.adapter.createSpace({title: this.title, creator: this.creator})
+      .then(resp => resp.json())
+      .then(json => this.id = json.data.id)
   }
 
   addNode(title, body) {
-    var newNode = new Node(title, body)
+    var newNode = new Node(title, body, this.id)
     this.nodeList.push(newNode)
   }
 

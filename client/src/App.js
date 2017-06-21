@@ -5,7 +5,7 @@ $(document).ready(function(){
 
 class App {
   constructor() {
-    this.space = new Space()
+    this.space = new Space("Test", "Carl")
     this.nodeTitle = $('#node-title')
     this.nodeBody = $('#node-body')
     this.nodeParent = $('#node-parent')
