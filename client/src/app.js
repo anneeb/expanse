@@ -39,7 +39,7 @@ class App {
   }
 
   setSpace(json){
-    $('body').html('') 
+    $('body').html('')
     this.space = new Space(json)
   }
 

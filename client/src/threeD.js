@@ -19,8 +19,8 @@ class ThreeD {
 
     this.renderer = new THREE.WebGLRenderer({
       alpha: 1,
-      antialias: true,
-      clearColor: 0xffffff
+      antialias: true
+      // clearColor: 0xffffff
     })
   	this.renderer.setSize(window.innerWidth, window.innerHeight)
   	this.renderer.shadowMap.enabled = true
