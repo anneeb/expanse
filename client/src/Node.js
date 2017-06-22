@@ -1,14 +1,14 @@
 class Node {
-  constructor(space, id, title, body, spaceId, parentId, numChild) {
+  constructor(space, obj) {
     this.space = space
-    this.id = id
-    this.parentId = parentId
-    this.title = title
-    this.body = body
-    this.spaceId = spaceId
-    this.numChild = numChild
-    this.container
-    this.line
+    this.id = obj.id
+    this.parentId = obj.parent_id
+    this.title = obj.title
+    this.body = obj.body
+    this.spaceId = obj.space_id
+    this.numChild = obj.num_child
+    this.container = null
+    this.line = null
   }
 
   drawBox(array) {

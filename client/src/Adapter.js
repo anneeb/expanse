@@ -1,51 +1,56 @@
-class Adapter {
+class SpaceAdapter {
   constructor () {
-    this.baseUrl = 'http://localhost:3000/api/v1/'
-    this.spaces = this.baseUrl + 'spaces/'
-    this.nodes = this.baseUrl + 'nodes/'
+    this.url = 'http://localhost:3000/api/v1/spaces/'
   }
 
   getAllSpaces() {
-    return fetch(this.spaces)
+    return fetch(this.url)
   }
 
-  getSpaceById(id) {
-    return fetch(this.spaces + id)
-  }
-
-  getNodeById(id) {
-    return fetch(this.nodes + id)
+  getSpaceById(space_id) {
+    return fetch(this.url + space_id)
   }
 
   createSpace(obj) {
-    var form = new FormData
+    let form = new FormData
     form.append("space[title]", obj['title'])
     form.append("space[creator]", obj['creator'])
-    return fetch(this.spaces, {
-      method: 'post',
-      body: form
-    })
-  }
-
-  createNode(obj) {
-    var form = new FormData
-    form.append("node[title]", obj['title'])
-    form.append("node[body]", obj['body'])
-    form.append("node[parent_id]", obj['parent_id'])
-    form.append("node[space_id]", obj['space_id'])
-
-    return fetch(this.nodes, {
+    return fetch(this.url, {
       method: 'post',
       body: form
     })
   }
 
   destroySpace(space_id) {
-    return fetch(this.spaces + space_id, {method: 'delete'})
+    return fetch(this.url + space_id, {method: 'delete'})
+  }
+
+}
+
+class NodeAdapter {
+  constructor () {
+    this.url = 'http://localhost:3000/api/v1/nodes/'
+  }
+
+  getNodeById(node_id) {
+    return fetch(this.url + node_id)
+  }
+
+  createNode(obj) {
+    let form = new FormData
+    form.append("node[title]", obj['title'])
+    form.append("node[body]", obj['body'])
+    form.append("node[parent_id]", obj['parent_id'])
+    form.append("node[space_id]", obj['space_id'])
+
+    return fetch(this.url, {
+      method: 'post',
+      body: form
+    })
   }
 
   destroyNode(node_id) {
-    return fetch(this.nodes + node_id, {method: 'delete'})
+    return fetch(this.url + node_id, {method: 'delete'})
   }
 
 }

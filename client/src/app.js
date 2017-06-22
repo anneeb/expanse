@@ -1,17 +1,16 @@
 $(document).ready(function() {
-  let app = new App
-  app.render()
-
+  app = new App
+  app.getProjects()
 })
 
 class App {
   constructor() {
-    this.adapter = new Adapter
-    this.main = $('#main')
-    this.projects = $('#projects')
-
+    this.spaceAdapter = new SpaceAdapter
     this.projectList = new ProjectList
 
+    this.main = $('#main')
+
+    this.projects = $('#projects')
     this.projects.click(this.selectProject.bind(this))
 
     this.newSpaceButton = $('#new-space')
@@ -20,35 +19,19 @@ class App {
 
     this.newSpaceButton.click(this.createProject.bind(this))
 
-  }
+    this.space = null
+    this.canvas = null
 
-  render() {
-    this.projectList.fetchProjects()
-  }
-
-  setSpace(json){
-    this.main.html(
-      `<canvas id="space" style="border:2px solid black;">
-      Your Dumbass Browser Needs An Update - Give It A Try
-      (Or If You Are Using InternetExplorer - Just Throw Out Your Computer And Get A New One...)
-      </canvas>
-
-      <button onClick="window.location.reload()">go home</button>
-      `
-    )
-    this.setCanvas()
-    this.space = new Space(json.id, json.title, json.creator)
-    this.space.fetchNodes()
   }
 
   selectProject() {
-    this.adapter.getSpaceById(event.target.dataset.id)
+    this.spaceAdapter.getSpaceById(event.target.dataset.id)
       .then(resp => resp.json())
       .then(json => this.setSpace(json))
   }
 
   createProject() {
-    this.adapter.createSpace({
+    this.spaceAdapter.createSpace({
       title: this.newTitle.val(),
       creator: this.newCreator.val()
     })
@@ -56,16 +39,34 @@ class App {
       .then(json => this.setSpace(json.data))
   }
 
-  setCanvas() {
-    var canvasNode = document.getElementById('space')
-
-    var pw = canvasNode.parentNode.clientWidth
-    var ph = canvasNode.parentNode.clientHeight
-
-    canvasNode.height = pw * 0.8 * (canvasNode.height/canvasNode.width)
-    canvasNode.width = pw * 1
-    canvasNode.style.top = (ph-canvasNode.height)/2 + "px"
-    canvasNode.style.left = (pw-canvasNode.width)/2 + "px"
+  setSpace(json){
+    this.addCanvas()
+    this.setCanvas()
+    this.space = new Space(json)
   }
+
+  addCanvas() {
+    this.main.html(`
+      <canvas id="canvas" style="border:2px solid black;">
+      Your Dumbass Browser Needs An Update - Give It A Try
+      (Or If You Are Using InternetExplorer - Just Throw Out Your Computer And Get A New One...)
+      </canvas>
+      <button onClick="window.location.reload()">go home</button>
+    `)
+  }
+
+  setCanvas() {
+    let canvas = document.getElementById('canvas')
+    let p = canvas.parentNode
+    canvas.height = p.clientWidth * 0.8 * (canvas.height/canvas.width)
+    canvas.width = p.clientWidth
+  }
+
+  getProjects() {
+    this.spaceAdapter.getAllSpaces()
+      .then(resp => resp.json())
+      .then(json => this.projectList.createProjects(json))
+      .then(() => this.projectList.render())
+   }
 
 }

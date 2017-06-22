@@ -21,28 +21,16 @@ class Project {
 
 class ProjectList {
   constructor() {
-    this.adapter = new Adapter()
     this.projects = []
     this.projectContainer = $('#projects')
   }
 
   renderProjects() {
-    return this.projects.map(p => p.render()).join('')
-  }
-
-  fetchProjects() {
-    this.adapter.getAllSpaces()
-      .then(r => this.parseJson(r))
-      .then(r => this.createProjects(r))
-      .then(this.render.bind(this))
-  }
-
-  parseJson(resp) {
-    return resp.json()
+    return this.projects.map(proj => proj.render()).join('')
   }
 
   createProjects(resp) {
-    this.projects = resp.map(p => new Project(p.id, p.title, p.creator))
+    this.projects = resp.map(proj => new Project(proj.id, proj.title, proj.creator))
   }
 
   render() {
