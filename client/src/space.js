@@ -20,6 +20,7 @@ class Space {
   }
 
   fetchAndRenderNodes() {
+    this.nodeList = []
     this.spaceAdapter.getSpaceById(this.id)
       .then(resp => resp.json())
       .then(json => this.addNodesFromJson(json))
@@ -52,10 +53,9 @@ class Space {
   }
 
   render() {
+    this.renderSpace()
     if (this.nodeList.length === 0) {
       this.renderNodeForm()
-    } else {
-      this.renderSpace()
     }
   }
 

@@ -1,10 +1,8 @@
 class NodeForm {
   constructor(space) {
     this.space = space
-    this.main = $('#main')
     this.canvas = $('#canvas')
     this.nodeAdapter = new NodeAdapter
-
   }
 
   formHTML() {
@@ -18,7 +16,7 @@ class NodeForm {
         <form class="card-content white-text" id="form-info">
           <input class="card-title" type="text" name="title" value="" id="title" placeholder="Title" required>
           <input type="text" name="creator" value="" id="body" placeholder="Body">
-          <button class="btn-floating halfway-fab waves-effect waves-light green" type="submit" value="Submit">
+          <button class="btn-floating halfway-fab waves-effect waves-light green" type="submit">
             <i class="material-icons">add</i>
           </button>
         </form>
@@ -29,12 +27,11 @@ class NodeForm {
   render(parentId) {
     if (!$('#form')[0]) {
       this.renderNewForm(parentId)
-      $("#form-info").submit(this.addNodeFromForm.bind(this, parentId))
+      $("#form-info").submit(() => this.addNodeFromForm(parentId))
     }
   }
 
   addNodeFromForm(parentId) {
-    event.stopPropagation()
     event.preventDefault()
     let title = $('#title').val()
     let body = $('#body').val()
@@ -49,11 +46,11 @@ class NodeForm {
   }
 
   renderNewForm(parentId) {
-    this.main.append(this.formHTML())
+    $('#main').append(this.formHTML())
     if (parentId) {
-      renderParentForm(parentId)
-      $("#remove").click(this.deleteNodeFromForm.bind(this, parentId))
-      $("#cancel").click($('#form').remove().bind())
+      this.renderParentForm(parentId)
+      $("#remove").click(() => this.deleteNodeFromForm(parentId))
+      $("#cancel").click(() => $('#form').remove())
     }
   }
 
@@ -66,8 +63,6 @@ class NodeForm {
   }
 
   deleteNodeFromForm(id) {
-    event.stopPropagation()
-    event.preventDefault()
     $('#form').remove()
     this.nodeAdapter.destroyNode(id)
       .then(() => this.space.fetchAndRenderNodes())
