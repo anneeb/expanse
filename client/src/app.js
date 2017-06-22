@@ -20,7 +20,6 @@ class App {
     this.newSpaceButton.click(this.createProject.bind(this))
 
     this.space = null
-    this.canvas = null
 
   }
 
@@ -40,26 +39,8 @@ class App {
   }
 
   setSpace(json){
-    this.addCanvas()
-    this.setCanvas()
+    $('body').html('') 
     this.space = new Space(json)
-  }
-
-  addCanvas() {
-    this.main.html(`
-      <canvas id="canvas" style="border:2px solid black;">
-      Your Dumbass Browser Needs An Update - Give It A Try
-      (Or If You Are Using InternetExplorer - Just Throw Out Your Computer And Get A New One...)
-      </canvas>
-      <button onClick="window.location.reload()">go home</button>
-    `)
-  }
-
-  setCanvas() {
-    let canvas = document.getElementById('canvas')
-    let p = canvas.parentNode
-    canvas.height = p.clientWidth * 0.8 * (canvas.height/canvas.width)
-    canvas.width = p.clientWidth
   }
 
   getProjects() {

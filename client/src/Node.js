@@ -7,31 +7,39 @@ class Node {
     this.body = obj.body
     this.spaceId = obj.space_id
     this.numChild = obj.num_child
-    this.container = null
-    this.line = null
+    this.position = {}
   }
 
-  drawBox(array) {
-    // array format: [[x, y, w, h], [startX, startY, endX, endY]]
-    let container = new createjs.Container()
-    let square = new createjs.Shape()
-    let label = new createjs.Text(`${this.title}`, "10px Arial", "white")
-    square.name = this.id
-    square.graphics.setStrokeStyle(1).beginStroke("black").beginFill("black").drawRect(0, 0, 50, 50)
-    container.x = array[0][0]
-    container.y = array[0][1]
-    container.addChild(square, label)
-    this.container = container
+  drawBox(arr) {
+    let geometry = new THREE.BoxGeometry(10, 10, 10);
+    let node = new THREE.Mesh(
+      geometry,
+      new THREE.MeshBasicMaterial( { color: 0x00ff00 } )
+    )
+
+    node.name = this.id
+
+    this.position.x = arr[0][0]
+    this.position.y = arr[0][1]
+    this.position.z = arr[0][2]
+
+    node.position.set(arr[0][0], arr[0][1], arr[0][2]);
+    node.castShadow = true;
+    node.receiveShadow = true;
+
+    this.space.three.scene.add(node);
+    this.space.three.nodes.push(node);
+
+    // array format: [[x, y, z], [startX, startY, startZ], [endX, endY, endz]]
   }
 
-  drawLine(array) {
-    // array format: [[x, y, w, h], [startX, startY, endX, endY]]
-    let line = new createjs.Shape()
-    line.graphics.setStrokeStyle(1)
-    line.graphics.beginStroke("black")
-    line.graphics.moveTo(array[1][0], array[1][1])
-    line.graphics.lineTo(array[1][2], array[1][3])
-    this.line = line
+  drawLine(arr) {
+    let geometry = new THREE.Geometry();
+    geometry.vertices.push(new THREE.Vector3(arr[1][0], arr[1][1], arr[1][2]))
+    geometry.vertices.push(new THREE.Vector3(arr[0][0], arr[0][1], arr[0][2]))
+
+    let line = new THREE.Line(geometry, material)
+    this.space.three.scene.add(line)
   }
 
   render(array) {
