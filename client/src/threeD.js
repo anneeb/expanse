@@ -17,7 +17,6 @@ class ThreeD {
 	  document.body.appendChild(this.stats.domElement)
 
     this.renderer = new THREE.WebGLRenderer({
-      alpha: 1,
       antialias: true,
       clearColor: 0x000000
     })
@@ -43,6 +42,7 @@ class ThreeD {
     document.addEventListener('click', this.clickOnNode.bind(this), false);
   }
 
+  // vvv INVOKE NEW FORM HERE vvv
   clickOnNode() {
   	if (this.findIntersections() !== null) {
   		console.log(this.intersection.id); //REMEMBER TO GRAB BY NAME WHICH WILL BE OUR ID
@@ -69,13 +69,12 @@ class ThreeD {
         }
       }
     } else {
-			this.nodes.forEach((node) => node.material.color.setHex(0x00ff00))
+			this.nodes.forEach((node) => node.material.color.setHex(0xe6e6e6))
 			return this.intersection
 		}
   }
 
   animate() {
-    console.log(this);
   	this.renderer.render(this.scene, this.camera);
   	this.findIntersections();
   	this.controls.update();

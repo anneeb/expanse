@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  app = new App
+  var app = new App
   app.getProjects()
 })
 
@@ -20,7 +20,6 @@ class App {
     this.newSpaceButton.click(this.createProject.bind(this))
 
     this.space = null
-
   }
 
   selectProject() {

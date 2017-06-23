@@ -14,7 +14,7 @@ class Node {
     let geometry = new THREE.BoxGeometry(10, 10, 10);
     let node = new THREE.Mesh(
       geometry,
-      new THREE.MeshBasicMaterial( { color: 0x00ff00 } )
+      new THREE.MeshBasicMaterial({color: 0xe6e6e6})
     )
 
     node.name = this.id
@@ -34,7 +34,7 @@ class Node {
   }
 
   drawLine(arr) {
-    let material = new THREE.LineBasicMaterial({color: 0x0000ff})
+    let material = new THREE.LineBasicMaterial({color: 0x00ffb3})
     let geometry = new THREE.Geometry();
     geometry.vertices.push(new THREE.Vector3(arr[1][0], arr[1][1], arr[1][2]))
     geometry.vertices.push(new THREE.Vector3(arr[0][0], arr[0][1], arr[0][2]))
