@@ -58,27 +58,30 @@ class Space {
 
   nodeDim(parentId) {
     if (!parentId) {
-      return [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+      return [[0, 0, 0], [0, 0, 0], 20]
     } else {
       let currentNodeParent = this.nodeList.find(node => node.id === parentId)
+      let parentG = currentNodeParent.position.g
       let parentX = currentNodeParent.position.x
       let parentY = currentNodeParent.position.y
       let parentZ = currentNodeParent.position.z
       let parentInfo = this.howToRender[`${parentId}`]
 
-      // array format: [[nx, ny, nz], [px, py, pz]]
+      // array format: [[nx, ny, nz], [px, py, pz], g]
 
       if (parentInfo.childMade === 0) {
           this.howToRender[`${parentId}`].childMade++
           return ([
             [parentX, parentY - 20, 0],
-            [parentX, parentY, 0]
+            [parentX, parentY, 0],
+            parentG * 0.5
           ])
 
       } else if (parentInfo.childMade % 2 === 0) {
           let x = ([
             [parentX - parentInfo.boxLeft, parentY - 20, 0],
             [parentX, parentY, 0],
+            parentG * 0.5
           ])
           parentInfo.boxLeft += 20
           parentInfo.childMade++
@@ -88,6 +91,7 @@ class Space {
         let x = ([
           [parentX + parentInfo.boxRight, parentY - 20, 0],
           [parentX, parentY, 0],
+          parentG * 0.5
         ])
         parentInfo.boxRight += 20
         parentInfo.childMade++

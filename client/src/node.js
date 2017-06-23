@@ -10,8 +10,10 @@ class Node {
     this.position = {}
   }
 
+  // array format: [[nx, ny, nz], [px, py, pz], g]
+
   drawBox(arr) {
-    let geometry = new THREE.BoxGeometry(10, 10, 10);
+    let geometry = new THREE.BoxGeometry(arr[2], arr[2], arr[2]);
     let node = new THREE.Mesh(
       geometry,
       new THREE.MeshBasicMaterial({color: 0xe6e6e6})
@@ -25,6 +27,8 @@ class Node {
       node.god = false
     }
 
+    this.position.g = arr[2]
+
     this.position.x = arr[0][0]
     this.position.y = arr[0][1]
     this.position.z = arr[0][2]
@@ -36,7 +40,7 @@ class Node {
     this.space.three.scene.add(node);
     this.space.three.nodes.push(node);
 
-    // array format: [[x, y, z], [startX, startY, startZ], [endX, endY, endz]]
+    // array format: [[nx, ny, nz], [px, py, pz], g]
   }
 
   drawLine(arr) {
