@@ -1,17 +1,19 @@
 class NodeForm {
   constructor(space) {
     this.space = space
-    this.canvas = $('#canvas')
+    this.body = $('body')
     this.nodeAdapter = new NodeAdapter
   }
 
   formHTML() {
     return(`
       <div class="card blue-grey" style="
-          width: ${this.canvas.width() * .6}px;
+          position: absolute;
+          z-index: 100;
+          width: ${this.body.width() * .6}px;
           height: 150px;
-          top: ${-this.canvas.height()}px;
-          left: ${this.canvas.width() / 2 - this.canvas.width() * .3}px
+          top: ${this.body.height() / 2 - 150}px;
+          left: ${this.body.width() / 2 - this.body.width() * .3}px
         " id="form">
         <form class="card-content white-text" id="form-info">
           <input class="card-title" type="text" name="title" value="" id="title" placeholder="Title" required>
@@ -24,9 +26,9 @@ class NodeForm {
     `)
   }
 
-  render(parentId) {
+  render(parentId, isGod) {
     if (!$('#form')[0]) {
-      this.renderNewForm(parentId)
+      this.renderNewForm(parentId, isGod)
       $("#form-info").submit(() => this.addNodeFromForm(parentId))
     }
   }
@@ -45,20 +47,31 @@ class NodeForm {
       .then(() => this.space.fetchAndRenderNodes())
   }
 
-  renderNewForm(parentId) {
-    $('#main').append(this.formHTML())
+  renderNewForm(parentId, isGod) {
+    this.body.prepend(this.formHTML())
     if (parentId) {
-      this.renderParentForm(parentId)
+      this.renderCancel()
+      $("#cancel").click(() => {
+        $('#form').remove()
+        $('body > canvas').click(() => this.space.three.clickOnNode())
+      })
+    }
+    if (!isGod) {
+      this.renderDelete()
       $("#remove").click(() => this.deleteNodeFromForm(parentId))
-      $("#cancel").click(() => $('#form').remove())
     }
   }
 
-  renderParentForm(parentId) {
+  renderCancel() {
+    $('#form-info').append(`
+      <a class="btn-floating halfway-fab waves-effect waves-light left blue-grey lighten-2" id="cancel"style="left: ${this.body.width() * .3 - 18}px">
+      <i class="material-icons">not_interested</i></a>
+    `)
+  }
+
+  renderDelete() {
     $('#form-info').append(`
       <a class="btn-floating halfway-fab waves-effect waves-light left red" id="remove"><i class="material-icons">delete</i></a>
-      <a class="btn-floating halfway-fab waves-effect waves-light left blue-grey lighten-2" id="cancel"style="left: ${this.canvas.width() * .3 - 18}px">
-      <i class="material-icons">not_interested</i></a>
     `)
   }
 

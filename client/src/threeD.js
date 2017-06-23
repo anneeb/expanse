@@ -1,7 +1,8 @@
 class ThreeD {
-  constructor () {
-    this.nodes = []
+  constructor (space) {
+    this.space = space
     this.mouse = new THREE.Vector2()
+    this.nodes = null
     this.raycaster = null
     this.intersection = null
     this.renderer = null
@@ -12,18 +13,21 @@ class ThreeD {
   }
 
   init() {
+    this.nodes = []
     this.stats = new Stats
     this.stats.domElement.style.cssText = 'position: absolute; right: 0; top: 0; z-index: 100;'
 	  document.body.appendChild(this.stats.domElement)
 
-    this.renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      clearColor: 0x000000
-    })
-  	this.renderer.setSize(window.innerWidth, window.innerHeight)
-  	this.renderer.shadowMap.enabled = true
-  	this.renderer.shadowMapSoft = true
-  	document.body.appendChild(this.renderer.domElement)
+    if (!this.renderer) {
+      this.renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        clearColor: 0x000000
+      })
+      this.renderer.setSize(window.innerWidth, window.innerHeight)
+    	this.renderer.shadowMap.enabled = true
+    	this.renderer.shadowMapSoft = true
+    	document.body.appendChild(this.renderer.domElement)
+    }
 
     this.scene = new THREE.Scene();
 
@@ -38,14 +42,15 @@ class ThreeD {
 
     this.raycaster = new THREE.Raycaster();
 
-    document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
-    document.addEventListener('click', this.clickOnNode.bind(this), false);
+    $('body > canvas').click(this.clickOnNode.bind(this))
+    document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this));
   }
 
-  // vvv INVOKE NEW FORM HERE vvv
   clickOnNode() {
+    console.log(this);
   	if (this.findIntersections() !== null) {
-  		console.log(this.intersection.id); //REMEMBER TO GRAB BY NAME WHICH WILL BE OUR ID
+      $('body > canvas').off('click')
+      this.space.renderNodeForm(this.intersection.name, this.intersection.god)
   	}
   }
 
@@ -82,3 +87,4 @@ class ThreeD {
     requestAnimationFrame(this.animate.bind(this))
   }
 }
+//

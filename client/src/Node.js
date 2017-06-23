@@ -19,6 +19,12 @@ class Node {
 
     node.name = this.id
 
+    if (!this.parentId) {
+      node.god = true
+    } else {
+      node.god = false
+    }
+
     this.position.x = arr[0][0]
     this.position.y = arr[0][1]
     this.position.z = arr[0][2]

@@ -5,7 +5,7 @@ class Space {
     this.creator = json.creator
     this.nodeList = []
     this.howToRender = {}
-    this.three = new ThreeD
+    this.three = new ThreeD(this)
     this.spaceAdapter = new SpaceAdapter
     this.nodeForm = new NodeForm(this)
     this.addNodesFromJson(json)
@@ -31,45 +31,29 @@ class Space {
     this.nodeList.push(newNode)
   }
 
-  setParent(event) {
-    let parentId
-    for (let i = 0; i < this.nodeList.length; i++) {
-      if (this.nodeList[i].container.children[0].name === event.target.name) {
-        parentId = event.target.name
-      }
-    }
-    this.renderNodeForm(parentId)
-  }
-
-  renderNodeForm(parentId) {
-    this.nodeForm.render(parentId)
+  renderNodeForm(parentId, isGod) {
+    this.nodeForm.render(parentId, isGod)
   }
 
   render() {
     this.renderSpace()
     if (this.nodeList.length === 0) {
-      this.renderNodeForm()
+      this.renderNodeForm(null, true)
     }
   }
 
   renderSpace() {
     this.three.init()
-
     for (let i = 0; i < this.nodeList.length; i++) {
-
       this.howToRender[`${this.nodeList[i].id}`] = {
         childMade: 0,
         boxRight: 20,
         boxLeft: 20
       }
-
       this.nodeList[i].render(this.nodeDim(this.nodeList[i].parentId))
-
     }
-
     this.three.animate()
     this.howToRender = {}
-
   }
 
   nodeDim(parentId) {
