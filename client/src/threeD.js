@@ -42,14 +42,14 @@ class ThreeD {
 
     this.raycaster = new THREE.Raycaster();
 
-    $('body > canvas').click(this.clickOnNode.bind(this))
-    document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this));
+    $('body > canvas').dblclick(this.clickOnNode.bind(this))
+    $('body > canvas').mousemove(this.onDocumentMouseMove.bind(this))
+    // document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this));
   }
 
   clickOnNode() {
-    console.log(this);
   	if (this.findIntersections() !== null) {
-      $('body > canvas').off('click')
+      $('body > canvas').off('dblclick')
       this.space.renderNodeForm(this.intersection.name, this.intersection.god)
   	}
   }

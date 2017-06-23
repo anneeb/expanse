@@ -53,7 +53,7 @@ class NodeForm {
       this.renderCancel()
       $("#cancel").click(() => {
         $('#form').remove()
-        $('body > canvas').click(() => this.space.three.clickOnNode())
+        $('body > canvas').dblclick(() => this.space.three.clickOnNode())
       })
     }
     if (!isGod) {
