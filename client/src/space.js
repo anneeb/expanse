@@ -72,28 +72,28 @@ class Space {
       if (parentInfo.childMade === 0) {
           this.howToRender[`${parentId}`].childMade++
           return ([
-            [parentX, parentY - 20, 0],
+            [parentX, parentY - parentG * 1.5, 0],
             [parentX, parentY, 0],
-            parentG * 0.5
+            parentG / 1.5
           ])
 
       } else if (parentInfo.childMade % 2 === 0) {
           let x = ([
-            [parentX - parentInfo.boxLeft, parentY - 20, 0],
+            [parentX - parentInfo.boxLeft, parentY - parentG * 1.5, 0],
             [parentX, parentY, 0],
-            parentG * 0.5
+            parentG / 1.5
           ])
-          parentInfo.boxLeft += 20
+          parentInfo.boxLeft += parentG * 1.5
           parentInfo.childMade++
           return x
 
       } else if (parentInfo.childMade % 2 !== 0) {
         let x = ([
-          [parentX + parentInfo.boxRight, parentY - 20, 0],
+          [parentX + parentInfo.boxRight, parentY - parentG * 1.5, 0],
           [parentX, parentY, 0],
-          parentG * 0.5
+          parentG / 1.5
         ])
-        parentInfo.boxRight += 20
+        parentInfo.boxRight += parentG * 1.5
         parentInfo.childMade++
         return x
       }
