@@ -23,7 +23,6 @@ class App {
   }
 
   selectProject() {
-    event.stopPropagation()
     if (event.target.classList[0] === "material-icons") {
       this.spaceAdapter.destroySpace(event.target.dataset.id)
         .then(() => this.getProjects())
