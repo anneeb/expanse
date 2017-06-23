@@ -34,6 +34,7 @@ class Node {
   }
 
   drawLine(arr) {
+    let material = new THREE.LineBasicMaterial({color: 0x0000ff})
     let geometry = new THREE.Geometry();
     geometry.vertices.push(new THREE.Vector3(arr[1][0], arr[1][1], arr[1][2]))
     geometry.vertices.push(new THREE.Vector3(arr[0][0], arr[0][1], arr[0][2]))

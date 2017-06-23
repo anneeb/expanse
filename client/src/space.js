@@ -3,18 +3,13 @@ class Space {
     this.id = json.id
     this.title = json.title
     this.creator = json.creator
-
     this.nodeList = []
     this.howToRender = {}
-
     this.three = new ThreeD
-
     this.spaceAdapter = new SpaceAdapter
     this.nodeForm = new NodeForm(this)
-
     this.addNodesFromJson(json)
     this.render()
-
   }
 
   fetchAndRenderNodes() {

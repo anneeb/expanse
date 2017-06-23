@@ -1,8 +1,7 @@
 class ThreeD {
   constructor () {
     this.nodes = []
-    this.mouse = new THREE.Vector2
-
+    this.mouse = new THREE.Vector2()
     this.raycaster = null
     this.intersection = null
     this.renderer = null
@@ -19,8 +18,8 @@ class ThreeD {
 
     this.renderer = new THREE.WebGLRenderer({
       alpha: 1,
-      antialias: true
-      // clearColor: 0xffffff
+      antialias: true,
+      clearColor: 0x000000
     })
   	this.renderer.setSize(window.innerWidth, window.innerHeight)
   	this.renderer.shadowMap.enabled = true
@@ -40,13 +39,13 @@ class ThreeD {
 
     this.raycaster = new THREE.Raycaster();
 
-    document.addEventListener('mousemove', this.onDocumentMouseMove, false);
-    document.addEventListener('click', this.clickOnNode, false);
+    document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this), false);
+    document.addEventListener('click', this.clickOnNode.bind(this), false);
   }
 
   clickOnNode() {
   	if (this.findIntersections() !== null) {
-  		console.log(intersection.id); //REMEMBER TO GRAB BY NAME WHICH WILL BE OUR ID
+  		console.log(this.intersection.id); //REMEMBER TO GRAB BY NAME WHICH WILL BE OUR ID
   	}
   }
 
@@ -61,26 +60,26 @@ class ThreeD {
 		let intersections = this.raycaster.intersectObjects(this.nodes);
 
 		if (intersections.length > 0) {
-			if (intersection != intersections[0].object) {
-				intersection = intersections[0].object;
-				if (this.nodes.find((node) => node.id === intersection.id)) {
-					let found = this.nodes.find((node) => node.id === intersection.id)
+			if (this.intersection != intersections[0].object) {
+				this.intersection = intersections[0].object;
+				if (this.nodes.find((node) => node.id === this.intersection.id)) {
+					let found = this.nodes.find((node) => node.id === this.intersection.id)
 					found.material.color.setHex(0xffff000)
-					return intersection.id
+					return this.intersection.id
         }
       }
     } else {
-			intersection = null;
 			this.nodes.forEach((node) => node.material.color.setHex(0x00ff00))
-			return intersection
+			return this.intersection
 		}
   }
 
   animate() {
+    console.log(this);
   	this.renderer.render(this.scene, this.camera);
   	this.findIntersections();
   	this.controls.update();
   	this.stats.update();
-    requestAnimationFrame(animate);
+    requestAnimationFrame(this.animate.bind(this))
   }
 }
