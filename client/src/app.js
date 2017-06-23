@@ -66,7 +66,7 @@ class App {
       <div style="position: absolute; top: 10px; left: 10px">
       <a class="btn-floating btn-large waves-effect waves-light" id="home"><i class="material-icons">store</i></a></div>
 
-      <h2 class="white-text" style="position: absolute; bottom: 10px; left: 40px">${json.title}</h2>
+      <h2 class="white-text" style="position: absolute; bottom: 10px; left: 30px">${json.title}</h2>
     `)
    }
 
