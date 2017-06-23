@@ -38,7 +38,9 @@ class App {
   }
 
   setSpace(json){
-    $('body').html('')
+    $('body').html(this.spaceHTML(json))
+    $('#home').click(() => window.location.reload())
+
     this.space = new Space(json)
   }
 
@@ -47,6 +49,15 @@ class App {
       .then(resp => resp.json())
       .then(json => this.projectList.createProjects(json))
       .then(() => this.projectList.render())
+   }
+
+   spaceHTML(json){
+    return (`
+      <div style="position: absolute; top: 10px; left: 10px">
+      <a class="btn-floating btn-large waves-effect waves-light" id="home"><i class="material-icons">store</i></a></div>
+
+      <h2 class="white-text" style="position: absolute; bottom: 10px; left: 40px">${json.title}</h2>
+    `)
    }
 
 }
