@@ -23,9 +23,15 @@ class App {
   }
 
   selectProject() {
-    this.spaceAdapter.getSpaceById(event.target.dataset.id)
-      .then(resp => resp.json())
-      .then(json => this.setSpace(json))
+    event.stopPropagation()
+    if (event.target.classList[0] === "material-icons") {
+      this.spaceAdapter.destroySpace(event.target.dataset.id)
+        .then(() => this.getProjects())
+    } else {
+      this.spaceAdapter.getSpaceById(event.target.dataset.id)
+        .then(resp => resp.json())
+        .then(json => this.setSpace(json))
+    }
   }
 
   createProject() {
@@ -45,6 +51,7 @@ class App {
   }
 
   getProjects() {
+    this.projects.html('')
     this.spaceAdapter.getAllSpaces()
       .then(resp => resp.json())
       .then(json => this.projectList.createProjects(json))

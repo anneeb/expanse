@@ -13,6 +13,7 @@ class Project {
             <span class="card-title" data-id=${this.id}>${this.title}</span>
             <p data-id=${this.id}>Created by: ${this.creator}</p>
           </div>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons" data-id=${this.id}>delete</i></a>
         </div>
       </div>`
       )
