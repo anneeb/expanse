@@ -46,9 +46,9 @@ class Space {
     this.three.init()
     for (let i = 0; i < this.nodeList.length; i++) {
       this.howToRender[`${this.nodeList[i].id}`] = {
-        childMade: 0,
-        boxRight: 20,
-        boxLeft: 20
+        chi: 0,
+        num: this.nodeList[i].numChild,
+        del: 2 * Math.PI / this.nodeList[i].numChild
       }
       this.nodeList[i].render(this.nodeDim(this.nodeList[i].parentId))
     }
@@ -65,37 +65,31 @@ class Space {
       let parentX = currentNodeParent.position.x
       let parentY = currentNodeParent.position.y
       let parentZ = currentNodeParent.position.z
-      let parentInfo = this.howToRender[`${parentId}`]
+      let parentI = this.howToRender[`${parentId}`]
 
       // array format: [[nx, ny, nz], [px, py, pz], g]
 
-      if (parentInfo.childMade === 0) {
-          this.howToRender[`${parentId}`].childMade++
-          return ([
-            [parentX, parentY - parentG * 1.5, 0],
-            [parentX, parentY, 0],
-            parentG / 1.5
-          ])
-
-      } else if (parentInfo.childMade % 2 === 0) {
-          let x = ([
-            [parentX - parentInfo.boxLeft, parentY - parentG * 1.5, 0],
-            [parentX, parentY, 0],
-            parentG / 1.5
-          ])
-          parentInfo.boxLeft += parentG * 1.5
-          parentInfo.childMade++
-          return x
-
-      } else if (parentInfo.childMade % 2 !== 0) {
-        let x = ([
-          [parentX + parentInfo.boxRight, parentY - parentG * 1.5, 0],
-          [parentX, parentY, 0],
+      if (parentI.num === 1) {
+        this.howToRender[`${parentId}`].chi++
+        return ([
+          [parentX, parentY - parentG * 1.5, parentZ],
+          [parentX, parentY, parentZ],
           parentG / 1.5
         ])
-        parentInfo.boxRight += parentG * 1.5
-        parentInfo.childMade++
-        return x
+
+      } else {
+        debugger
+        let rad = parentI.del * parentI.chi
+        let x = Math.cos(rad)
+        let z = Math.sin(rad)
+
+        let arr = ([
+          [parentX + parentG * x, parentY - parentG * 1.5, parentZ + parentG * z],
+          [parentX, parentY, parentZ],
+          parentG / 1.5
+        ])
+        this.howToRender[`${parentId}`].chi ++
+        return arr
       }
     }
   }
