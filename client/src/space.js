@@ -83,7 +83,7 @@ class Space {
         let z = Math.sin(rad)
 
         let arr = ([
-          [parentX + parentG * x, parentY - parentG * 1.5, parentZ + parentG * z],
+          [parentX + parentG * x * 2, parentY - parentG * 1.5, parentZ + parentG * z * 2],
           [parentX, parentY, parentZ],
           parentG / 1.5
         ])
