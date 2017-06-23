@@ -35016,3 +35016,144 @@ Processing by Api::V1::SpacesController#show as */*
 Completed 200 OK in 17ms (Views: 11.3ms | ActiveRecord: 2.5ms)
 
 
+  [1m[35m (1.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (3.4ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (535.6ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_development"[0m
+  [1m[35m (566.5ms)[0m  [1m[35mDROP DATABASE IF EXISTS "server_test"[0m
+  [1m[35m (575.3ms)[0m  [1m[35mCREATE DATABASE "server_development" ENCODING = 'unicode'[0m
+  [1m[35m (333.5ms)[0m  [1m[35mCREATE DATABASE "server_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (4.4ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (1.5ms)[0m  [1m[35mDROP TABLE IF EXISTS "nodes" CASCADE[0m
+  [1m[35m (48.8ms)[0m  [1m[35mCREATE TABLE "nodes" ("id" bigserial primary key, "title" character varying, "body" text, "space_id" bigint, "parent_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (6.5ms)[0m  [1m[35mCREATE  INDEX  "index_nodes_on_parent_id" ON "nodes"  ("parent_id")[0m
+  [1m[35m (6.7ms)[0m  [1m[35mCREATE  INDEX  "index_nodes_on_space_id" ON "nodes"  ("space_id")[0m
+  [1m[35m (0.4ms)[0m  [1m[35mDROP TABLE IF EXISTS "spaces" CASCADE[0m
+  [1m[35m (15.0ms)[0m  [1m[35mCREATE TABLE "spaces" ("id" bigserial primary key, "title" character varying, "creator" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (15.4ms)[0m  [1m[35mALTER TABLE "nodes" ADD CONSTRAINT "fk_rails_70125468a8"
+FOREIGN KEY ("space_id")
+  REFERENCES "spaces" ("id")
+[0m
+  [1m[35m (12.3ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (4.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (3.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20170620140911)[0m
+  [1m[35m (1.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20170620140745);
+
+[0m
+  [1m[35m (13.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.9ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-06-23 15:40:19.128454"], ["updated_at", "2017-06-23 15:40:19.128454"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.6ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35mSQL (2.8ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (1.0ms)[0m  [1m[35mDROP TABLE IF EXISTS "nodes" CASCADE[0m
+  [1m[35m (30.1ms)[0m  [1m[35mCREATE TABLE "nodes" ("id" bigserial primary key, "title" character varying, "body" text, "space_id" bigint, "parent_id" bigint, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (6.8ms)[0m  [1m[35mCREATE  INDEX  "index_nodes_on_parent_id" ON "nodes"  ("parent_id")[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE  INDEX  "index_nodes_on_space_id" ON "nodes"  ("space_id")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mDROP TABLE IF EXISTS "spaces" CASCADE[0m
+  [1m[35m (21.3ms)[0m  [1m[35mCREATE TABLE "spaces" ("id" bigserial primary key, "title" character varying, "creator" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[35m (10.4ms)[0m  [1m[35mALTER TABLE "nodes" ADD CONSTRAINT "fk_rails_70125468a8"
+FOREIGN KEY ("space_id")
+  REFERENCES "spaces" ("id")
+[0m
+  [1m[35m (18.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (3.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20170620140911)[0m
+  [1m[35m (7.6ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20170620140745);
+
+[0m
+  [1m[35m (14.2ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (2.7ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.9ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2017-06-23 15:40:19.427416"], ["updated_at", "2017-06-23 15:40:19.427416"]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (6.0ms)[0m  [1m[34mSELECT  "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (3.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "spaces" ("title", "creator", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "My Cool Space"], ["creator", "Annee"], ["created_at", "2017-06-23 15:40:19.596120"], ["updated_at", "2017-06-23 15:40:19.596120"]]
+  [1m[35m (3.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (9.5ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "God Node"], ["body", "I have no parent"], ["space_id", 1], ["created_at", "2017-06-23 15:40:19.732540"], ["updated_at", "2017-06-23 15:40:19.732540"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.0ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Child Node 1"], ["body", "I am a child"], ["space_id", 1], ["created_at", "2017-06-23 15:40:19.749366"], ["updated_at", "2017-06-23 15:40:19.749366"]]
+  [1m[35mSQL (1.6ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Child Node 2"], ["body", "I am also a child"], ["space_id", 1], ["created_at", "2017-06-23 15:40:19.757339"], ["updated_at", "2017-06-23 15:40:19.757339"]]
+  [1m[35mSQL (1.0ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Child Node 3"], ["body", "I am a child 3"], ["space_id", 1], ["created_at", "2017-06-23 15:40:19.763515"], ["updated_at", "2017-06-23 15:40:19.763515"]]
+  [1m[35mSQL (3.0ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Child Node 4"], ["body", "I am a child 4"], ["space_id", 1], ["created_at", "2017-06-23 15:40:19.769485"], ["updated_at", "2017-06-23 15:40:19.769485"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (4.8ms)[0m  [1m[33mUPDATE "nodes" SET "parent_id" = $1, "updated_at" = $2 WHERE "nodes"."id" = $3[0m  [["parent_id", 1], ["updated_at", "2017-06-23 15:40:19.781818"], ["id", 2]]
+  [1m[35mSQL (1.4ms)[0m  [1m[33mUPDATE "nodes" SET "parent_id" = $1, "updated_at" = $2 WHERE "nodes"."id" = $3[0m  [["parent_id", 1], ["updated_at", "2017-06-23 15:40:19.793522"], ["id", 3]]
+  [1m[35m (0.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.5ms)[0m  [1m[33mUPDATE "nodes" SET "parent_id" = $1, "updated_at" = $2 WHERE "nodes"."id" = $3[0m  [["parent_id", 2], ["updated_at", "2017-06-23 15:40:19.802283"], ["id", 4]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "nodes" SET "parent_id" = $1, "updated_at" = $2 WHERE "nodes"."id" = $3[0m  [["parent_id", 3], ["updated_at", "2017-06-23 15:40:19.814193"], ["id", 5]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.6ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.1ms)[0m  [1m[32mINSERT INTO "spaces" ("title", "creator", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "My Cool Space 2"], ["creator", "Annee 2"], ["created_at", "2017-06-23 15:40:19.823636"], ["updated_at", "2017-06-23 15:40:19.823636"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.6ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "God Node 2"], ["body", "I have no parent 2"], ["space_id", 2], ["created_at", "2017-06-23 15:40:19.833347"], ["updated_at", "2017-06-23 15:40:19.833347"]]
+  [1m[35m (1.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Child Node 1 - 2"], ["body", "I am a child - 2"], ["space_id", 2], ["created_at", "2017-06-23 15:40:19.844627"], ["updated_at", "2017-06-23 15:40:19.844627"]]
+  [1m[35mSQL (2.3ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Child Node 2 - 2"], ["body", "I am also a child - 2"], ["space_id", 2], ["created_at", "2017-06-23 15:40:19.849358"], ["updated_at", "2017-06-23 15:40:19.849358"]]
+  [1m[35mSQL (1.2ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Child Node 3 - 2"], ["body", "I am a child 3 - 2"], ["space_id", 2], ["created_at", "2017-06-23 15:40:19.856897"], ["updated_at", "2017-06-23 15:40:19.856897"]]
+  [1m[35mSQL (1.5ms)[0m  [1m[32mINSERT INTO "nodes" ("title", "body", "space_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["title", "Child Node 4 - 2"], ["body", "I am a child 4 - 2"], ["space_id", 2], ["created_at", "2017-06-23 15:40:19.862100"], ["updated_at", "2017-06-23 15:40:19.862100"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (1.7ms)[0m  [1m[33mUPDATE "nodes" SET "parent_id" = $1, "updated_at" = $2 WHERE "nodes"."id" = $3[0m  [["parent_id", 6], ["updated_at", "2017-06-23 15:40:19.871815"], ["id", 7]]
+  [1m[35mSQL (2.1ms)[0m  [1m[33mUPDATE "nodes" SET "parent_id" = $1, "updated_at" = $2 WHERE "nodes"."id" = $3[0m  [["parent_id", 6], ["updated_at", "2017-06-23 15:40:19.877891"], ["id", 8]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (2.2ms)[0m  [1m[33mUPDATE "nodes" SET "parent_id" = $1, "updated_at" = $2 WHERE "nodes"."id" = $3[0m  [["parent_id", 7], ["updated_at", "2017-06-23 15:40:19.886644"], ["id", 9]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35mSQL (0.8ms)[0m  [1m[33mUPDATE "nodes" SET "parent_id" = $1, "updated_at" = $2 WHERE "nodes"."id" = $3[0m  [["parent_id", 8], ["updated_at", "2017-06-23 15:40:19.897967"], ["id", 10]]
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+Started GET "/api/v1/spaces/" for 127.0.0.1 at 2017-06-23 11:40:33 -0400
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::SpacesController#index as */*
+  [1m[36mSpace Load (1.0ms)[0m  [1m[34mSELECT "spaces".* FROM "spaces"[0m
+[active_model_serializers]   [1m[36mNode Load (0.6ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.4ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 2]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 2]]
+[active_model_serializers]   [1m[36mNode Load (0.4ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 3]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 4]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 5]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 6]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 7]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 8]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 9]]
+[active_model_serializers]   [1m[36mNode Load (0.5ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 10]]
+[active_model_serializers] Rendered ActiveModel::Serializer::CollectionSerializer with ActiveModelSerializers::Adapter::Attributes (62.32ms)
+Completed 200 OK in 106ms (Views: 83.9ms | ActiveRecord: 17.8ms)
+
+
+Started GET "/api/v1/spaces/2" for 127.0.0.1 at 2017-06-23 11:40:34 -0400
+Processing by Api::V1::SpacesController#show as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mSpace Load (0.5ms)[0m  [1m[34mSELECT  "spaces".* FROM "spaces" WHERE "spaces"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+[active_model_serializers]   [1m[36mNode Load (0.7ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."space_id" = $1[0m  [["space_id", 2]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 6]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 7]]
+[active_model_serializers]   [1m[36mNode Load (0.3ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 8]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 9]]
+[active_model_serializers]   [1m[36mNode Load (0.2ms)[0m  [1m[34mSELECT "nodes".* FROM "nodes" WHERE "nodes"."parent_id" = $1[0m  [["parent_id", 10]]
+[active_model_serializers] Rendered SpaceSerializer with ActiveModelSerializers::Adapter::Attributes (10.22ms)
+Completed 200 OK in 30ms (Views: 8.7ms | ActiveRecord: 12.4ms)
+
+

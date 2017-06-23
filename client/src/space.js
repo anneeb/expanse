@@ -78,7 +78,6 @@ class Space {
         ])
 
       } else {
-        debugger
         let rad = parentI.del * parentI.chi
         let x = Math.cos(rad)
         let z = Math.sin(rad)
