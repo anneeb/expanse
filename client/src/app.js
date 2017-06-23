@@ -13,19 +13,22 @@ class App {
     this.projects = $('#projects')
     this.projects.click(this.selectProject.bind(this))
 
-    this.newSpaceButton = $('#new-space')
+    this.newSpaceForm = $('#new-space-form')
     this.newTitle = $('#new-title')
     this.newCreator = $('#new-creator')
 
-    this.newSpaceButton.click(this.createProject.bind(this))
+    this.newSpaceForm.submit(this.createProject.bind(this))
 
     this.space = null
   }
 
   selectProject() {
-    if (event.target.classList[0] === "material-icons") {
-      this.spaceAdapter.destroySpace(event.target.dataset.id)
-        .then(() => this.getProjects())
+    if (event.target.classList[0] === 'material-icons') {
+      let input = confirm('Are you sure you want to delete this space? This action cannot be undone.')
+      if (input) {
+        this.spaceAdapter.destroySpace(event.target.dataset.id)
+          .then(() => this.getProjects())
+      }
     } else {
       this.spaceAdapter.getSpaceById(event.target.dataset.id)
         .then(resp => resp.json())
@@ -34,6 +37,7 @@ class App {
   }
 
   createProject() {
+    event.preventDefault()
     this.spaceAdapter.createSpace({
       title: this.newTitle.val(),
       creator: this.newCreator.val()

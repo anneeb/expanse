@@ -76,9 +76,15 @@ class NodeForm {
   }
 
   deleteNodeFromForm(id) {
-    $('#form').remove()
-    this.nodeAdapter.destroyNode(id)
-      .then(() => this.space.fetchAndRenderNodes())
+    let input = confirm('Are you sure you want to delete this node and all of its children? This action cannot be undone.')
+    if (input) {
+      $('#form').remove()
+      this.nodeAdapter.destroyNode(id)
+        .then(() => this.space.fetchAndRenderNodes())
+    } else {
+      $('#form').remove()
+      $('body > canvas').dblclick(() => this.space.three.clickOnNode())
+    }
   }
 
 }
