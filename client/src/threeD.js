@@ -10,6 +10,7 @@ class ThreeD {
     this.camera = null
     this.controls = null
     this.stats = null
+    this.light = null
   }
 
   init() {
@@ -19,10 +20,7 @@ class ThreeD {
 	  document.body.appendChild(this.stats.domElement)
 
     if (!this.renderer) {
-      this.renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        clearColor: 0x000000
-      })
+      this.renderer = new THREE.WebGLRenderer({antialias: true})
       this.renderer.setSize(window.innerWidth, window.innerHeight)
     	this.renderer.shadowMap.enabled = true
     	this.renderer.shadowMapSoft = true
@@ -30,11 +28,15 @@ class ThreeD {
     }
 
     this.scene = new THREE.Scene();
+    this.scene.background = new THREE.Color(0x84d0c7)
 
   	this.camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000)
   	this.camera.position.set(100, 100, 100)
   	this.scene.add(this.camera)
 
+    this.light = new THREE.PointLight(0xffffff);
+	  this.light.position.set(0,250,0);
+	  this.scene.add(this.light);
 
 	  this.controls = new THREE.OrbitControls(this.camera);
 	  this.controls.minDistance = 10;
@@ -69,12 +71,10 @@ class ThreeD {
 				this.intersection = intersections[0].object;
 				if (this.nodes.find((node) => node.id === this.intersection.id)) {
 					let found = this.nodes.find((node) => node.id === this.intersection.id)
-					found.material.color.setHex(0xffff000)
 					return this.intersection.id
         }
       }
     } else {
-			this.nodes.forEach((node) => node.material.color.setHex(0xe6e6e6))
 			return this.intersection
 		}
   }
