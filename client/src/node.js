@@ -41,7 +41,7 @@ class Node {
 
     // Test Sprite
     var textSprite = this.makeTextSprite(" "+ this.title  + " ", arr[2])
-  	textSprite.position.set(arr[0][0], arr[0][1], arr[0][2])
+  	textSprite.position.set(arr[0][0]-100, arr[0][1], arr[0][2])
     this.space.three.scene.add(textSprite)
   }
 
@@ -50,8 +50,8 @@ class Node {
     console.log(fontSize);
 
   	var fontface = "Arial";
-  	var fontsize = fontSize
-  	var borderThickness = 4;
+  	var fontsize = fontSize/2
+  	var borderThickness = 4
   	var borderColor =  {r:100, g:100, b:255, a:1};
   	var backgroundColor = {r:255, g:100, b:100, a:1};
 

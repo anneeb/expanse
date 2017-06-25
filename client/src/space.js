@@ -58,7 +58,7 @@ class Space {
 
   nodeDim(parentId) {
     if (!parentId) {
-      return [[0, 0, 0], [0, 0, 0], 20]
+      return [[0, 0, 0], [0, 0, 0], 100]
     } else {
       let currentNodeParent = this.nodeList.find(node => node.id === parentId)
       let parentG = currentNodeParent.position.g

@@ -31,7 +31,7 @@ class ThreeD {
     this.scene.background = new THREE.Color(0x84d0c7)
 
   	this.camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 5000)
-  	this.camera.position.set(100, 100, 100)
+  	this.camera.position.set(100, 100, 1000)
   	this.scene.add(this.camera)
 
     this.light = new THREE.PointLight(0xffffff);
@@ -39,14 +39,14 @@ class ThreeD {
 	  this.scene.add(this.light);
 
 	  this.controls = new THREE.OrbitControls(this.camera);
-	  this.controls.minDistance = 10;
-	  this.controls.maxDistance = 1000;
+	  this.controls.minDistance = 1;
+	  this.controls.maxDistance = 10000;
 
     this.raycaster = new THREE.Raycaster();
 
     $('body > canvas').dblclick(this.clickOnNode.bind(this))
     $('body > canvas').mousemove(this.onDocumentMouseMove.bind(this))
-    // document.addEventListener('mousemove', this.onDocumentMouseMove.bind(this));
+
   }
 
   clickOnNode() {
