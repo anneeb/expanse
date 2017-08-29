@@ -12,7 +12,7 @@ In expanse/server:
 
 In expanse/client:
 
-* open ```index.html``` in browser
+* Open ```index.html``` in browser
 
 ## Technologies
 
